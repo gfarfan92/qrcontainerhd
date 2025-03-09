@@ -1,3 +1,5 @@
+C:\Users\user\Documents\qr\prueba qr\server.js
+
 const express = require("express");
 const cors = require("cors"); // ✅ Importar CORS
 const { QRCodeStyling } = require("@ckho/qr-code-styling/lib/qr-code-styling.common");
@@ -69,3 +71,58 @@ app.post("/generar-qr", async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
+
+-------------------------------------------------------------------------------
+
+C:\Users\user\Documents\qr\prueba qr\public\index.html
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de QR</title>
+</head>
+<body>
+    <h1>Generador de Código QR</h1>
+    <input type="text" id="urlInput" placeholder="Ingresa la URL">
+    <button onclick="generarQR()">Generar QR</button>
+    <br>
+    <img id="qrImage" alt="Código QR generado" style="margin-top: 20px;">
+
+    <script>
+        async function generarQR() {
+            const url = document.getElementById("urlInput").value;
+            if (!url) {
+                alert("Por favor, ingresa una URL válida.");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:3000/generar-qr", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Error al generar el QR");
+                }
+
+                const blob = await response.blob();
+                const imgUrl = URL.createObjectURL(blob);
+                document.getElementById("qrImage").src = imgUrl;
+            } catch (error) {
+                console.error("Error al generar el QR:", error);
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
