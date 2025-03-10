@@ -30,8 +30,8 @@ try {
 // Estilos preconfigurados
 const estilosQR = {
     default: {
-        width: "",
-        height: "",
+        width: 300,
+        height: 300,
         data: "",
         margin: 0,
         qrOptions: { typeNumber: "0", mode: "Byte", errorCorrectionLevel: "Q" },
@@ -43,8 +43,8 @@ const estilosQR = {
         cornersDotOptions: { type: "dot", color: "#c40d81" }
     },
     dots: {
-        "width": "",
-        "height": "",
+        "width": 200,
+        "height": 200,
         "data": "",
         "margin": 0,
         "qrOptions": {
@@ -132,8 +132,8 @@ const estilosQR = {
         }
     },
     square: {
-        width: "",
-        height: "",
+        width: 300,
+        height: 300,
         data: "",
         image: `data:image/png;base64,${logoBase64}`,
         dotsOptions: { color: "#000000", type: "square" },
@@ -144,15 +144,14 @@ const estilosQR = {
 
 // Endpoint para generar el código QR
 app.post("/generar-qr", async (req, res) => {
-    const { url, style, size } = req.body;
+    const { url, style } = req.body;
 
     if (!url || !style || !estilosQR[style]) {
         return res.status(400).json({ error: "Parámetros inválidos." });
     }
 
     // Clonar el estilo seleccionado y establecer la URL
-    const opcionesQR = { ...estilosQR[style], data: url, width: size,
-        height: size,};
+    const opcionesQR = { ...estilosQR[style], data: url };
 
     // Crear el QR
     const qrCode = new QRCodeStyling({ nodeCanvas, jsdom: JSDOM, ...opcionesQR });

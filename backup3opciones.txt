@@ -1,0 +1,150 @@
+// server.js
+const express = require("express");
+const cors = require("cors");
+const { QRCodeStyling } = require("qr-code-styling/lib/qr-code-styling.common");
+const nodeCanvas = require("canvas");
+const { JSDOM } = require("jsdom");
+const fs = require("fs");
+const path = require("path");
+
+const app = express();
+const PORT = 3000;
+
+app.use(cors({
+    origin: "*",
+    methods: "GET, POST, OPTIONS",
+    allowedHeaders: "Content-Type"
+}));
+
+app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json());
+
+// Leer el logo en Base64
+let logoBase64;
+try {
+    logoBase64 = fs.readFileSync("hostdimelogo.png", { encoding: "base64" });
+} catch (error) {
+    console.error("Error: No se pudo leer el archivo del logo.", error);
+}
+
+// Estilos preconfigurados
+const estilosQR = {
+    default: {
+        width: 300,
+        height: 300,
+        data: "", // Se establecerá dinámicamente
+        image: `data:image/png;base64,${logoBase64}`,
+        dotsOptions: { color: "#000000", type: "square" },
+        backgroundOptions: { color: "#ffffff" },
+        imageOptions: { crossOrigin: "anonymous", margin: 20 }
+    },
+    dots: {
+        width: 300,
+        height: 300,
+        data: "",
+        image: `data:image/png;base64,${logoBase64}`,
+        dotsOptions: { color: "#000000", type: "dots" },
+        backgroundOptions: { color: "#ffffff" },
+        imageOptions: { crossOrigin: "anonymous", margin: 20 }
+    },
+    square: {
+        width: 300,
+        height: 300,
+        data: "",
+        image: `data:image/png;base64,${logoBase64}`,
+        dotsOptions: { color: "#000000", type: "square" },
+        backgroundOptions: { color: "#ffffff" },
+        imageOptions: { crossOrigin: "anonymous", margin: 20 }
+    }
+};
+
+// Endpoint para generar el código QR
+app.post("/generar-qr", async (req, res) => {
+    const { url, style } = req.body;
+
+    if (!url || !style || !estilosQR[style]) {
+        return res.status(400).json({ error: "Parámetros inválidos." });
+    }
+
+    // Clonar el estilo seleccionado y establecer la URL
+    const opcionesQR = { ...estilosQR[style], data: url };
+
+    // Crear el QR
+    const qrCode = new QRCodeStyling({ nodeCanvas, jsdom: JSDOM, ...opcionesQR });
+
+    try {
+        const buffer = await qrCode.getRawData("png");
+        res.setHeader("Content-Type", "image/png");
+        res.send(buffer);
+    } catch (error) {
+        console.error("Error al generar el QR:", error);
+        res.status(500).json({ error: "Error al generar el código QR." });
+    }
+});
+
+// Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+
+ ----------------------------------------------------------------------------------
+
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de QR</title>
+</head>
+<body>
+    <h1>Generador de Código QR</h1>
+
+    <input type="text" id="urlInput" placeholder="Ingresa la URL">
+
+    <select id="styleSelect">
+        <option value="default">Estilo por defecto</option>
+        <option value="dots">Puntos</option>
+        <option value="square">Cuadrados</option>
+    </select>
+    <button onclick="generarQR()">Generar QR</button>
+
+    <br>
+    <img id="qrImage" alt="Código QR generado" style="margin-top: 20px;">
+
+    <script>
+        function validarURL(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        async function generarQR() {
+            const url = document.getElementById("urlInput").value;
+            const style = document.getElementById("styleSelect").value;
+
+            if (!validarURL(url)) {
+                alert("Ingrese una URL válida.");
+                return;
+            }
+
+            const response = await fetch("http://localhost:3000/generar-qr", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url, style })
+            });
+
+            if (!response.ok) {
+                alert("Error generando el código QR");
+                return;
+            }
+
+            const blob = await response.blob();
+            document.getElementById("qrImage").src = URL.createObjectURL(blob);
+        }
+    </script>
+</body>
+</html>

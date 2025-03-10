@@ -7,36 +7,62 @@
 </head>
 <body>
     <h1>Generador de Código QR</h1>
+
     <input type="text" id="urlInput" placeholder="Ingresa la URL">
+
+    <select id="styleSelect">
+        <option value="default">Estilo por defecto</option>
+        <option value="dots">Puntos</option>
+        <option value="square">Cuadrados</option>
+    </select>
+
+    <select id="sizeSelect">
+        <option value="300">300</option>
+        <option value="500">500</option>
+        <option value="1200">1200</option>
+    </select> 
+
+
     <button onclick="generarQR()">Generar QR</button>
+
     <br>
     <img id="qrImage" alt="Código QR generado" style="margin-top: 20px;">
 
     <script>
+        function validarURL(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
         async function generarQR() {
             const url = document.getElementById("urlInput").value;
-            if (!url) {
-                alert("Por favor, ingresa una URL válida.");
+            const style = document.getElementById("styleSelect").value;
+            const size = parseInt(document.getElementById("sizeSelect").value, 10);
+
+
+
+            if (!validarURL(url)) {
+                alert("Ingrese una URL válida.");
                 return;
             }
 
-            try {
-                const response = await fetch("http://localhost:3000/generar-qr", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ url })
-                });
+            const response = await fetch("http://localhost:3000/generar-qr", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url, style , size })
+            });
 
-                if (!response.ok) {
-                    throw new Error("Error al generar el QR");
-                }
-
-                const blob = await response.blob();
-                const imgUrl = URL.createObjectURL(blob);
-                document.getElementById("qrImage").src = imgUrl;
-            } catch (error) {
-                console.error("Error al generar el QR:", error);
+            if (!response.ok) {
+                alert("Error generando el código QR");
+                return;
             }
+
+            const blob = await response.blob();
+            document.getElementById("qrImage").src = URL.createObjectURL(blob);
         }
     </script>
 </body>
