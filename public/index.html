@@ -24,8 +24,8 @@
     </select> 
 
     <select id="typeSelect">
-        <option value="asv">300</option>
-        <option value="png">500</option>
+        <option value="svg">svg</option>
+        <option value="png">png</option>
        
     </select> 
 
@@ -34,6 +34,9 @@
 
     <br>
     <img id="qrImage" alt="Código QR generado" style="margin-top: 20px;">
+
+    <br>
+    <a id="downloadButton" style="display:none;" download>Descarga tu QR</a>
 
 
 
@@ -72,7 +75,20 @@
             }
 
             const blob = await response.blob();
-            document.getElementById("qrImage").src = URL.createObjectURL(blob);
+            const qrImage = document.getElementById("qrImage");
+            const downloadButton = document.getElementById("downloadButton");
+
+            // Crear un objeto URL para la imagen generada
+            const qrURL = URL.createObjectURL(blob);
+
+            // Mostrar el QR en la página
+            qrImage.src = qrURL;
+            qrImage.style.display = "block";
+
+            // Configurar el botón de descarga
+            downloadButton.href = qrURL;
+            downloadButton.download = `codigo-qr.${type}`;
+            downloadButton.style.display = "inline-block";
         }
     </script>
 </body>
