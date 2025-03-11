@@ -26,19 +26,20 @@
     <select id="typeSelect">
         <option value="svg">svg</option>
         <option value="png">png</option>
-       
     </select> 
 
+    <button onclick="shortURL()">Generar URL corta</button>
+
+    <br>
+    <p id="shortUrl" style="margin-top: 20px;"></p>
 
     <button onclick="generarQR()">Generar QR</button>
 
     <br>
-    <img id="qrImage" alt="Código QR generado" style="margin-top: 20px;">
+    <img id="qrImage" alt="Código QR generado" style="margin-top: 20px; display: none;">
 
     <br>
     <a id="downloadButton" style="display:none;" download>Descarga tu QR</a>
-
-
 
     <script>
         function validarURL(url) {
@@ -50,45 +51,76 @@
             }
         }
 
+        async function shortURL() {
+            const urlInput = document.getElementById("urlInput");
+            const shortUrl = document.getElementById("shortUrl");
+            
+            if (!urlInput.value || !validarURL(urlInput.value)) {
+                alert("Por favor, ingresa una URL válida.");
+                return;
+            }
+
+            try {
+                const response = await fetch("https://qrlink.hostdi.me/rest/v3/short-urls", {
+                    method: "POST",
+                    headers: {
+                        "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965", // API Key correcta
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ longUrl: urlInput.value })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Error en la API: ${response.status}`);
+                }
+
+                const data = await response.json();
+                shortUrl.textContent = `URL corta: ${data.shortUrl}`;
+                shortUrl.style.display = "block";
+                alert("URL acortada correctamente ✅");
+            } catch (error) {
+                console.error("Error:", error);
+                alert("No se pudo acortar la URL.");
+            }
+        }
+
         async function generarQR() {
             const url = document.getElementById("urlInput").value;
             const style = document.getElementById("styleSelect").value;
             const size = parseInt(document.getElementById("sizeSelect").value, 10);
             const type = document.getElementById("typeSelect").value;
-
-
+            const qrImage = document.getElementById("qrImage");
+            const downloadButton = document.getElementById("downloadButton");
 
             if (!validarURL(url)) {
                 alert("Ingrese una URL válida.");
                 return;
             }
 
-            const response = await fetch("http://localhost:3000/generar-qr", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url, style , size ,type })
-            });
+            try {
+                const response = await fetch("http://localhost:3000/generar-qr", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url, style, size, type })
+                });
 
-            if (!response.ok) {
-                alert("Error generando el código QR");
-                return;
+                if (!response.ok) {
+                    throw new Error("Error generando el código QR");
+                }
+
+                const blob = await response.blob();
+                const qrURL = URL.createObjectURL(blob);
+
+                qrImage.src = qrURL;
+                qrImage.style.display = "block";
+
+                downloadButton.href = qrURL;
+                downloadButton.download = `codigo-qr.${type}`;
+                downloadButton.style.display = "inline-block";
+            } catch (error) {
+                console.error("Error:", error);
+                alert("No se pudo generar el QR.");
             }
-
-            const blob = await response.blob();
-            const qrImage = document.getElementById("qrImage");
-            const downloadButton = document.getElementById("downloadButton");
-
-            // Crear un objeto URL para la imagen generada
-            const qrURL = URL.createObjectURL(blob);
-
-            // Mostrar el QR en la página
-            qrImage.src = qrURL;
-            qrImage.style.display = "block";
-
-            // Configurar el botón de descarga
-            downloadButton.href = qrURL;
-            downloadButton.download = `codigo-qr.${type}`;
-            downloadButton.style.display = "inline-block";
         }
     </script>
 </body>
