@@ -14,6 +14,7 @@
         <option value="default">Estilo por defecto</option>
         <option value="dots">Puntos</option>
         <option value="square">Cuadrados</option>
+        <option value="hostdime">Hostdime</option>
     </select>
 
     <select id="sizeSelect">
@@ -22,11 +23,19 @@
         <option value="1200">1200</option>
     </select> 
 
+    <select id="typeSelect">
+        <option value="asv">300</option>
+        <option value="png">500</option>
+       
+    </select> 
+
 
     <button onclick="generarQR()">Generar QR</button>
 
     <br>
     <img id="qrImage" alt="Código QR generado" style="margin-top: 20px;">
+
+
 
     <script>
         function validarURL(url) {
@@ -42,6 +51,7 @@
             const url = document.getElementById("urlInput").value;
             const style = document.getElementById("styleSelect").value;
             const size = parseInt(document.getElementById("sizeSelect").value, 10);
+            const type = document.getElementById("typeSelect").value;
 
 
 
@@ -53,7 +63,7 @@
             const response = await fetch("http://localhost:3000/generar-qr", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url, style , size })
+                body: JSON.stringify({ url, style , size ,type })
             });
 
             if (!response.ok) {

@@ -139,6 +139,19 @@ const estilosQR = {
         dotsOptions: { color: "#000000", type: "square" },
         backgroundOptions: { color: "#ffffff" },
         imageOptions: { crossOrigin: "anonymous", margin: 20 }
+    },
+    hostdime: {
+        width: "",
+        height: "",
+        data: "",
+        margin: 0,
+        qrOptions: { typeNumber: "0", mode: "Byte", errorCorrectionLevel: "Q" },
+        imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 13 },
+        dotsOptions: { type: "dots", color: "#f46f10"},
+        backgroundOptions: { color: "rgb(255, 255, 254)" },
+        image: `data:image/png;base64,${logoBase64}`,
+        cornersSquareOptions: { type: "dot", color: "#f46f10" },
+        cornersDotOptions: { type: "dot", color: "rgba(48, 119, 200, 0.71)"  }
     }
 };
 
