@@ -1,0 +1,50 @@
+[
+  {
+    "name": "prueba",
+    "value": "prueba",
+    "img": "img/default.png",
+    "dotsOptions": {
+      "type": "rounded",
+      "color": "#e61e1e"
+    },
+    "cornersSquareOptions": {
+      "type": "extra-rounded",
+      "color": "#1534cb"
+    },
+    "backgroundOptions": {
+      "color": "#dbf708"
+    }
+  },
+  {
+    "name": "p",
+    "value": "p",
+    "img": "img/default.png",
+    "dotsOptions": {
+      "type": "square",
+      "color": "#000000"
+    },
+    "cornersSquareOptions": {
+      "type": "square",
+      "color": "#d11515"
+    },
+    "backgroundOptions": {
+      "color": "#FFFFFF"
+    }
+  },
+  {
+    "name": "tt",
+    "value": "tt",
+    "img": "img/default.png",
+    "dotsOptions": {
+      "type": "square",
+      "color": "#000000"
+    },
+    "cornersSquareOptions": {
+      "type": "square",
+      "color": "#000000"
+    },
+    "backgroundOptions": {
+      "color": "#FFFFFF"
+    }
+  }
+]
