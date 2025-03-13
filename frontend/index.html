@@ -18,7 +18,8 @@
                 <!-- Input de URL -->
                 <div class="mb-3">
                     <label for="urlInput" class="form-label">Ingresa la URL</label>
-                    <input type="text" v-model="url" class="form-control" placeholder="https://example.com">
+                    <input type="text" id="urlInput" name="url" v-model="url" class="form-control" placeholder="https://example.com">
+                    
                 </div>
 
                 <!-- Selección de Estilo -->
@@ -82,11 +83,11 @@
                 return {
                     url: '',
                     styles: [
-                        { name: 'Hostdime', value: 'hostdime', img: '/img/hostdime.png' },
-                        { name: 'Morado', value: 'morado', img: '/img/morado.png' },
-                        { name: 'Puntos', value: 'dots', img: '/img/dots.png' },
-                        { name: 'Cuadrados', value: 'square', img: '/img/square.png' }
-                    ],
+    { name: 'Hostdime', value: 'hostdime', img: 'img/hostdime.png' },
+    { name: 'Morado', value: 'morado', img: 'img/morado.png' },
+    { name: 'Puntos', value: 'dots', img: 'img/dots.png' },
+    { name: 'Cuadrados', value: 'square', img: 'img/square.png' }
+],
                     selectedStyle: 'hostdime',
                     size: '300',
                     type: 'svg',

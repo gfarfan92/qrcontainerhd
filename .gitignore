@@ -1,2 +1,42 @@
-/node_modules
-/files
+# pa ignorar node_modules
+FrontEnd/node_modules/
+Backend/node_modules/
+package-lock.json
+FrontEnd/files/
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.production.local
+
+# Logs y archivos temporales
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+*.tmp
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración IDEs/editores
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+*.iml
+
+# Archivos de construcción
+FrontEnd/dist/
+Backend/dist/
+build/
+coverage/
+
+
+
+# Otros
+*.bak
+*.cache
