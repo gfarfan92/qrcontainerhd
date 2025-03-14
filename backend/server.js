@@ -29,57 +29,6 @@
  
  
  
- 
- /* desde aca para poder validar y generar shortUll */
- 
- const isValidUrl = (url) => {
-     try {
-         new URL(url);
-         return true;
-     } catch (err) {
-         return false;
-     }
- };
- 
- app.post("/shorten", async (req, res) => {
-     const { longUrl } = req.body;
- 
-     if (!longUrl || !isValidUrl(longUrl)) {
-         return res.status(400).json({ error: "URL inválida o faltante" });
-     }
- 
- 
-     try {
-         const response = await fetch("https://qrlink.hostdi.me/rest/v3/short-urls", {
-             method: "POST",
-             headers: {
-                 "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
-                 "Content-Type": "application/json",
-             },
-             body: JSON.stringify({ longUrl }),
-         });
- 
-         const data = await response.json();
- 
-         if (!response.ok) throw new Error(data.error || "Error al acortar la URL");
- 
-         res.json({ shortUrl: data.shortUrl });
-     } catch (error) {
-         console.error("Error acortando la URL:", error);
-         res.status(500).json({ error: "No se pudo acortar la URL" });
-     }
- 
- 
-     
- });
- 
- 
- 
- 
- 
- 
- 
- 
  // Leer el logo en Base64
  let logoBase64;
  try {
@@ -148,30 +97,56 @@
      }
  };
  
- // Endpoint para generar el código QR
  app.post("/generar-qr", async (req, res) => {
-     const { url, style, size,type } = req.body;
- 
-     if (!url || !style || !estilosQR[style] || !Wtype[type]) {
-         return res.status(400).json({ error: "Parámetros inválidos." });
-     }
- 
-     // Clonar el estilo seleccionado y establecer la URL
-     const opcionesQR = { ...estilosQR[style], data: url, width: size,
-         height: size,image: Wtype[type] };
- 
-     // Crear el QR
-     const qrCode = new QRCodeStyling({ nodeCanvas, jsdom: JSDOM, ...opcionesQR });
- 
-     try {
-         const buffer = await qrCode.getRawData(type); // Generar el QR en el tipo correcto
-         res.setHeader("Content-Type", type === "svg" ? "image/svg+xml" : "image/png");
-         res.send(buffer);
-     } catch (error) {
-         console.error("Error al generar el QR:", error);
-         res.status(500).json({ error: "Error al generar el código QR." });
-     }
- });
+    const { url, style, size, type } = req.body;
+
+    // Validación de los parámetros
+    if (!url || !style || !estilosQR[style] || !Wtype[type]) {
+        return res.status(400).json({ error: "Parámetros inválidos." });
+    }
+
+    try {
+        // Acortar la URL primero
+        const shortenResponse = await fetch("https://qrlink.hostdi.me/rest/v3/short-urls", {
+            method: "POST",
+            headers: {
+                "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ longUrl: url }),
+        });
+
+        const shortenData = await shortenResponse.json();
+        if (!shortenResponse.ok) throw new Error(shortenData.error || "Error al acortar la URL");
+
+        const shortUrl = shortenData.shortUrl;
+
+        // Clonar el estilo seleccionado y configurar con la URL acortada
+        const opcionesQR = { 
+            ...estilosQR[style],
+            data: shortUrl,
+            width: parseInt(size),
+            height: parseInt(size),
+           image: Wtype[type]
+        };
+        
+
+        // Crear el QR
+        const qrCode = new QRCodeStyling({ nodeCanvas, jsdom: JSDOM, ...opcionesQR });
+
+        const buffer = await qrCode.getRawData(type);
+
+        res.json({
+            shortUrl,
+            qrImage: `data:image/${type};base64,${buffer.toString("base64")}`
+        });
+
+    } catch (error) {
+        console.error("Error al procesar la solicitud:", error);
+        res.status(500).json({ error: "Error al generar el código QR." });
+    }
+});
+
  
  // Iniciar el servidor
  app.listen(PORT, () => {
