@@ -108,7 +108,7 @@
     try {
         // Validación del alias personalizado
         let customSlug;//se debe utilizar customSlug para que funcione personalizar url en shlink
-        if (personalUrl && personalUrl.trim() !== "") {
+        if (personalUrl && personalUrl.trim() !== "") { //es para validar el campo en caso de ser llenado
             const slugRegex = /^[a-z0-9-_]+$/; // Solo minúsculas, números, guiones y guiones bajos
             customSlug = personalUrl.trim().toLowerCase();// me aseguro ya que es norma de shlink sacar url personalizada en minuscula para evitar conficto
         
@@ -146,7 +146,7 @@
 
         const shortUrl = shortenData.shortUrl;
 
-        // Configurar opciones para el QR
+        // Aqui tomo todos los datos del script y los llamo de los estilos predeterminados
         const opcionesQR = {
             ...estilosQR[style],
             data: shortUrl,
