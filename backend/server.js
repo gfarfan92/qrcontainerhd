@@ -22,7 +22,7 @@
      allowedHeaders: "Content-Type"
  }));
  
- app.use(express.static(path.join(__dirname, "../frontend")));
+ app.use(express.static(path.join(__dirname, "../frontend")));//pa que tome mi ruta frontend
  app.use(express.json());
  app.use("/img", express.static(path.join(__dirname, "img")));
  
@@ -96,62 +96,86 @@
          cornersDotOptions: { type: "dot", color: "rgba(48, 119, 200, 0.71)"  }
      }
  };
- 
- app.post("/generar-qr", async (req, res) => {
-    const { url, style, size, type } = req.body;
 
-    // Validación de los parámetros
+ app.post("/generar-qr", async (req, res) => {
+    const { url, style, size, type, personalUrl } = req.body;
+
+    // Validación básica de los parámetros
     if (!url || !style || !estilosQR[style] || !Wtype[type]) {
         return res.status(400).json({ error: "Parámetros inválidos." });
     }
 
     try {
-        // Acortar la URL primero
+        // Validación del alias personalizado
+        let customSlug;//se debe utilizar customSlug para que funcione personalizar url en shlink
+        if (personalUrl && personalUrl.trim() !== "") {
+            const slugRegex = /^[a-z0-9-_]+$/; // Solo minúsculas, números, guiones y guiones bajos
+            customSlug = personalUrl.trim().toLowerCase();// me aseguro ya que es norma de shlink sacar url personalizada en minuscula para evitar conficto
+        
+            if (!slugRegex.test(customSlug)) {
+                return res.status(400).json({
+                    error: "Alias personalizado no válido. Usa solo letras minúsculas, números, '-' o '_'."
+                });
+            }
+        }
+        
+        // Construir el cuerpo de la petición
+        const bodyData = { longUrl: url };
+        if (customSlug) {
+            bodyData.customSlug = customSlug;
+        }
+
+        console.log("🔹 Cuerpo enviado a la API:", JSON.stringify(bodyData));
+
+        // Hacer la petición a la API
         const shortenResponse = await fetch("https://qrlink.hostdi.me/rest/v3/short-urls", {
             method: "POST",
             headers: {
                 "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify({ longUrl: url }),
+            body: JSON.stringify(bodyData)
         });
 
         const shortenData = await shortenResponse.json();
-        if (!shortenResponse.ok) throw new Error(shortenData.error || "Error al acortar la URL");
+        console.log("🔹 Respuesta completa de la API:", shortenData);
+
+        if (!shortenResponse.ok) {
+            throw new Error(shortenData.detail || "Error desconocido al acortar la URL");
+        }
 
         const shortUrl = shortenData.shortUrl;
 
-        // Clonar el estilo seleccionado y configurar con la URL acortada
-        const opcionesQR = { 
+        // Configurar opciones para el QR
+        const opcionesQR = {
             ...estilosQR[style],
             data: shortUrl,
             width: parseInt(size),
             height: parseInt(size),
-           image: Wtype[type]
+            image: Wtype[type]
         };
-        
 
-        // Crear el QR
+        // Generar el código QR
         const qrCode = new QRCodeStyling({ nodeCanvas, jsdom: JSDOM, ...opcionesQR });
-
         const buffer = await qrCode.getRawData(type);
 
+        // Respuesta final
         res.json({
             shortUrl,
             qrImage: `data:image/${type};base64,${buffer.toString("base64")}`
         });
 
     } catch (error) {
-        console.error("Error al procesar la solicitud:", error);
-        res.status(500).json({ error: "Error al generar el código QR." });
+        console.error("⚠️ Error al procesar la solicitud:", error.message);
+        res.status(500).json({ error: error.message || "Error al generar el código QR." });
     }
 });
 
- 
- // Iniciar el servidor
- app.listen(PORT, () => {
-     console.log(`Servidor corriendo en http://localhost:${PORT}`);
- });
- 
- 
- 
+// Iniciar el servidor
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+
+
+
