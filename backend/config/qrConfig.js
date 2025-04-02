@@ -13,67 +13,13 @@ const Wtype = {
     svg: `data:image/svg+xml;base64,${logoBase64}`
 };
 
-const estilosQR = [
-    {
-        "width": "",
-        "height": "",
-        "data": "",
-        "margin": 0,
-        "qrOptions": { "typeNumber": "0", "mode": "Byte", "errorCorrectionLevel": "Q" },
-        "imageOptions": { "hideBackgroundDots": true, "imageSize": 0.4, "margin": 13 },
-        "dotsOptions": { "type": "square", "color": "#000000" },
-        "backgroundOptions": { "color": "rgba(255, 255, 255, 0)" },
-        "image": `data:image/png;base64,${logoBase64}`,
-        "cornersSquareOptions": { "type": "square", "color": "#c40d81" },
-        "cornersDotOptions": { "type": "dot", "color": "#c40d81" }
-    },
-    {
-        "width": "",
-        "height": "",
-        "data": "",
-        "margin": 0,
-        "qrOptions": { "typeNumber": "0", "mode": "Byte", "errorCorrectionLevel": "H" },
-        "imageOptions": { "hideBackgroundDots": true, "imageSize": 0.32, "margin": 2 },
-        "dotsOptions": { "type": "dots", "color": "#000000", "gradient": null },
-        "backgroundOptions": { "color": "rgba(255, 255, 255, 0)" },
-        "image": `data:image/png;base64,${logoBase64}`,
-        "cornersSquareOptions": { "type": "extra-rounded", "color": "#f46f10" },
-        "cornersDotOptions": { "type": "dot", "color": "#f46f10" }
-    },
-    {
-        "width": "",
-        "height": "",
-        "data": "",
-        "image": `data:image/png;base64,${logoBase64}`,
-        "dotsOptions": { "color": "#000000", "type": "square" },
-        "backgroundOptions": { "color": "#ffffff" },
-        "imageOptions": { "crossOrigin": "anonymous", "margin": 20 }
-    },
-    {
-        "width": "",
-        "height": "",
-        "data": "",
-        "margin": 0,
-        "qrOptions": { "typeNumber": "0", "mode": "Byte", "errorCorrectionLevel": "Q" },
-        "imageOptions": { "hideBackgroundDots": true, "imageSize": 0.4, "margin": 13 },
-        "dotsOptions": { "type": "dots", "color": "#f46f10" },
-        "backgroundOptions": { "color": "rgb(255, 255, 254)" },
-        "image": `data:image/png;base64,${logoBase64}`,
-        "cornersSquareOptions": { "type": "dot", "color": "#f46f10" },
-        "cornersDotOptions": { "type": "dot", "color": "rgba(48, 119, 200, 0.71)" }
-    },   {
-        "width": "",
-        "height": "",
-        "data": "",
-        "margin": 0,
-        "qrOptions": { "typeNumber": "0", "mode": "Byte", "errorCorrectionLevel": "Q" },
-        "imageOptions": { "hideBackgroundDots": true, "imageSize": 0.4, "margin": 13 },
-        "dotsOptions": { "type": "square", "color": "#ff5544" },
-        "backgroundOptions": { "color": "rgba(255, 255, 255, 0)" },
-        "image": `data:image/png;base64,${logoBase64}`,
-        "cornersSquareOptions": { "type": "square", "color": "#c4dd81" },
-        "cornersDotOptions": { "type": "dot", "color": "#c40d81" }
-    },
-];
+let estilosQR = [];
+try {
+    const estilosData = fs.readFileSync(path.join(__dirname, "styles.json"), "utf-8");
+    estilosQR = JSON.parse(estilosData);
+    estilosQR = estilosQR.map(estilo => ({ ...estilo, image: Wtype.png }));
+} catch (error) {
+    console.error("Error al cargar estilos QR:", error);
+}
 
 module.exports = { estilosQR, Wtype };
