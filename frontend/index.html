@@ -1,187 +1,200 @@
 <!DOCTYPE html> 
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de QR con Vue 3</title>
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Vue 3 CDN -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de QR con Vue 3</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Vue 3 CDN -->
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
+
 </head>
 
-<body class="bg-light"> <!--mi todo en blanco--->
-    <div id="app" class="container mt-5"><!--sera el contenedor que activare con vue--->
+<body class="bg-light">
+  <div id="app" class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 bg-white p-4 shadow rounded">
+        <h1 class="text-center mb-4">Generador de Código QR</h1>
 
-        <div class="row justify-content-center"><!--cree otro container para poder centrar --->
-            <div class="col-md-6 bg-white p-4 shadow rounded"><!---centre al medio de la pantalla-->
-                <h1 class="text-center mb-4">Generador de Código QR</h1><!--titulo--->
-    
-             <!-- Input de URL -->
-<div class="mb-3">
-    <label for="urlInput" class="form-label">Ingresa la URL</label>
-    <input 
-        type="text" 
-        id="urlInput" 
-        name="url" 
-        v-model="url" 
-        class="form-control" 
-        placeholder="https://example.com" 
-        required
-    >
-</div>
-
-<!-- Input de URL Personalizada -->
-<div class="mb-3">
-    <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
-    <input 
-        type="text" 
-        id="personalUrl" 
-        name="personalUrl" 
-        v-model="personalUrl" 
-        class="form-control" 
-        placeholder="Ejemplo: mi-enlace"
-    >
-</div>
-
-<!-- Selección de Estilo -->
-<div class="mb-3">
-    <label class="form-label d-block">Selecciona el Estilo</label>
-    <div class="d-flex justify-content-around flex-wrap">
-        <div 
-            v-for="style in styles" 
-            :key="style.value" 
-            class="text-center"
-        >
-            <input 
-                type="radio" 
-                v-model="selectedStyle" 
-                :value="style.value" 
-                class="btn-check" 
-                :id="`style-${style.value}`"
-            >
-            <label :for="`style-${style.value}`" class="btn btn-outline-primary">
-                <img :src="style.img" :alt="style.value" class="img-thumbnail" width="80">
-                <div>{{ style.name }}</div>
-            </label>
+        <!-- Input de URL -->
+        <div class="mb-3">
+          <label for="urlInput" class="form-label">Ingresa la URL</label>
+          <input 
+            type="text" 
+            id="urlInput" 
+            name="url" 
+            v-model="url" 
+            class="form-control" 
+            placeholder="https://example.com" 
+            required
+          >
         </div>
-    </div>
-</div>
 
-    
-                <!-- Selección de Tamaño -->
-                <div class="mb-3">
-                    <label class="form-label">Tamaño</label><!--describe mi select--->
-                    <select v-model="size" class="form-select"><!--va a coger el value dentro de este select y lo guargara en size para llevarlo al array--->
-                        <option value="300">300</option>
-                        <option value="500">500</option>
-                        <option value="1200">1200</option>
-                    </select>
-                </div>
-    
-                <!-- Selección de Formato -->
-                <div class="mb-3">
-                    <label class="form-label">Formato</label>
-                    <select v-model="type" class="form-select"><!--va a tomar el value dentro de este select y lo guargara en type para llevarlo al array--->
-                        <option value="svg">SVG</option>
-                        <option value="png">PNG</option>
-                    </select>
-                </div>
-    
-                <!-- Botón único para shortQr y Crear el url  -->
-                <div class="d-grid gap-2">
-                    <button class="btn btn-success" @click="generarQR">Generar QR</button><!--escucha el click y trae generarQr que es la funcion del script, o mas bien la activa--->
-                </div>
-    
-                <!-- URL corta generada -->
-                <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">{{ shortUrl }}</p><!--solo me condiciona que SI shortUrl ya existe me la ponga en {{ shortUrl }}--->
-              
-              
-                <!-- Botón de descarga -->
-                <div v-if="qrImage" class="text-center mt-3">
-                    <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
-                </div>
+        <!-- Input de URL Personalizada -->
+        <div class="mb-3">
+          <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
+          <input 
+            type="text" 
+            id="personalUrl" 
+            name="personalUrl" 
+            v-model="personalUrl" 
+            class="form-control" 
+            placeholder="Ejemplo: mi-enlace"
+          >
+        </div>
 
-
-                
-    
-               
+        <!-- Selección de Estilo -->
+        <div class="mb-3">
+            <label class="form-label d-block">Selecciona el Estilo</label>
+            <div class="d-flex justify-content-around flex-wrap">
+              <div v-for="(style, index) in styles" :key="index" class="text-center">
+                <input 
+                  type="radio" 
+                  v-model="selectedStyle" 
+                  :value="index" 
+                  class="btn-check" 
+                  :id="`style-${index}`"
+                >
+                <label :for="`style-${index}`" class="btn btn-outline-primary">
+                  <div>{{ 'Estilo ' + (index + 1) }}</div>
+                </label>
+              </div>
             </div>
+          </div>
 
-            <!-- Imagen del QR -->
-            <div v-if="qrImage" class="text-center mt-3">
-                <!-- Para PNG -->
-                <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" /><!--si es estrictamente png traerlo con :src y mostrar--->
-
-                <!-- Para SVG -->
-                <div v-if="type === 'svg'" class="text-center mt-3" v-html="decodeSvg(qrImage)"></div><!--convertir a html para mostrar svg--->
-            </div> 
-            
+        <!-- Selección de Tamaño -->
+        <div class="mb-3">
+          <label class="form-label">Tamaño</label>
+          <select v-model="size" class="form-select">
+            <option value="300">300</option>
+            <option value="500">500</option>
+            <option value="1200">1200</option>
+          </select>
         </div>
-    </div>
 
-<script>
+        <!-- Selección de Formato -->
+        <div class="mb-3">
+          <label class="form-label">Formato</label>
+          <select v-model="type" class="form-select">
+            <option value="svg">SVG</option>
+            <option value="png">PNG</option>
+          </select>
+        </div>
+
+        <!-- Botón para generar el QR -->
+        <div class="d-grid gap-2">
+          <button class="btn btn-success" @click="generarQR">Generar QR</button>
+        </div>
+
+        <!-- URL corta generada -->
+        <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">{{ shortUrl }}</p>
+
+        <!-- Botón de descarga -->
+        <div v-if="qrImage" class="text-center mt-3">
+          <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
+        </div>
+      </div>
+
+   <!-- Imagen del QR -->
+   <div v-if="qrImage" class="text-center mt-3">
+    <!-- Para PNG -->
+    <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" /><!--si es estrictamente png traerlo con :src y mostrar--->
+
+    <!-- Para SVG -->
+    <object type="image/svg+xml" data="URL_DEL_SVG"></object>
+</div> 
+
+
+
+    </div>
+  </div>
+  <script>
     const app = Vue.createApp({
-        data() {
-            return {
-                styles: [
-                    { name: 'Hostdime', value: 'hostdime', img: 'img/hostdime.png' },
-                    { name: 'Morado', value: 'morado', img: 'img/morado.png' },
-                    { name: 'Puntos', value: 'dots', img: 'img/dots.png' },
-                    { name: 'Cuadrados', value: 'square', img: 'img/square.png' }
-                ],
-                url: '',
-                personalUrl: '',
-                selectedStyle: 'hostdime',
-                size: '300',
-                type: 'svg',
-                shortUrl: '',
-                qrImage: ''
-            };
+      data() {
+        return {
+          styles: [], // Estilos obtenidos del backend
+          url: '',
+          personalUrl: '',
+          selectedStyle: 0, // Se maneja como índice del array
+          size: '300',
+          type: 'png',
+          shortUrl: '',
+          qrImage: ''
+        };
+      },
+      methods: {
+        // Método para obtener los estilos del backend
+        async fetchStyles() {
+          try {
+            const response = await fetch("http://localhost:4021/api/estilos");
+            console.log("Respuesta del endpoint /api/estilos:", response);
+            if (!response.ok) {
+              throw new Error("La respuesta no es OK");
+            }
+            const data = await response.json();
+            console.log("Datos obtenidos:", data);
+            this.styles = data;
+          } catch (error) {
+            console.error("Error al obtener estilos:", error);
+          }
+        },
+  
+        // Método corregido para generar QR
+        async generarQR() {
+          if (!this.url) return alert("Por favor, ingresa una URL válida.");
+  
+          const payload = {
+            url: this.url,
+            personalUrl: this.personalUrl,
+            style: this.selectedStyle, // Usamos el índice seleccionado
+            size: parseInt(this.size),
+            type: this.type
+          };
+  
+          console.log("Enviando datos al backend:", JSON.stringify(payload));
+  
+          try {
+            const response = await fetch("http://localhost:4021/api/generar-qr", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            });
+  
+            const data = await response.json();
+            if (data.error) throw new Error(data.error);
+  
+            this.shortUrl = data.shortUrl;
+            this.qrImage = data.qrImage;
+          } catch (error) {
+            console.error("Error:", error);
+            alert("No se pudo generar el QR.");
+          }
         },
 
-        methods: {
-            async generarQR() {
-                if (!this.url) return alert("Por favor, ingresa una URL válida.");
 
-                try {
-                    const response = await fetch("http://localhost:4021/generar-qr", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                            url: this.url,
-                            personalUrl: this.personalUrl,
-                            style: this.selectedStyle,
-                            size: parseInt(this.size),
-                            type: this.type
-                        })
-                    });
 
-                    const data = await response.json();
-                    if (data.error) throw new Error(data.error);
+        decodeSvg(qrImage) {
+      if (!qrImage.startsWith("data:image/svg+xml;base64,")) {
+        return qrImage; // Si ya es SVG crudo, úsalo directamente
+      }
 
-                    this.shortUrl = data.shortUrl;
-                    this.qrImage = data.qrImage;
+      const base64Data = qrImage.replace("data:image/svg+xml;base64,", "");
+      return atob(base64Data); // Decodificar Base64 a SVG real
+    }
 
-                } catch (error) {
-                    console.error("Error:", error);
-                    alert("No se pudo generar el QR.");
-                }
-            },
 
-            decodeSvg(base64Svg) {
-                try {
-                    return atob(base64Svg.split(",")[1]);
-                } catch {
-                    return "<p>Error al cargar el QR en formato SVG</p>";
-                }
-            }
-        }
+
+      },
+      mounted() {
+        // Cargar los estilos al iniciar la app
+        this.fetchStyles();
+      }
     });
-
+  
     app.mount('#app');
-</script>
-
+  </script>
+  
 </body>
 </html>
-
