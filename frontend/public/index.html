@@ -85,7 +85,8 @@
 
         <!-- Botón para generar el QR -->
         <div class="d-grid gap-2">
-          <button class="btn btn-success" @click="generarQR">Generar QR</button>
+          <button type="button" class="btn btn-success" @click="generarQR">Generar QR</button>
+
         </div>
 
         <!-- URL corta generada -->
@@ -103,7 +104,8 @@
     <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" /><!--si es estrictamente png traerlo con :src y mostrar--->
 
     <!-- Para SVG -->
-    <object type="image/svg+xml" data="URL_DEL_SVG"></object>
+
+<object v-if="type === 'svg'" :data="qrImage" type="image/svg+xml" class="img-fluid"></object>
 </div> 
 
 
@@ -111,8 +113,9 @@
     </div>
   </div>
  
+  <script type="module" src="./js/main.js"></script>
 
-  <script src="./js/app.js"></script>
+
 
 </body>
 </html>

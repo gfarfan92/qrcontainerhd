@@ -5,7 +5,7 @@ const fs = require("fs");
 const path = require('path');
 
 
-const { estilosQR, Wtype } = require("../config/qrConfig");
+const { obtenerEstilosQR, Wtype } = require("../config/qrConfig");
 
 let logoBase64;
 try {
@@ -37,8 +37,9 @@ async function eliminarSlug(customSlug) {
 async function generarQR(req, res) {
     const { url, style, size, type, personalUrl } = req.body;
 
+    const estilosQR = obtenerEstilosQR();
     if (!url || style === null || style === undefined || estilosQR[style] === undefined || Wtype[type] === undefined) {
-        return res.status(400).json({ error: "Parámetros inválidos." });
+            return res.status(400).json({ error: "Parámetros inválidos." });
     }
 
     try {
