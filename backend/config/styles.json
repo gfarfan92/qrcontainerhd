@@ -1,6 +1,7 @@
 [
     {
-        "name": "naranja",
+        "name": "morado",
+        "preview":"/img/morado.png",
       "width": "",
       "height": "",
       "data": "",
@@ -28,7 +29,9 @@
         "gradient": { "linear": true, "radial": false, "color1": "#ffffff", "color2": "#ffffff", "rotation": "0" }
       }
     },
-    {"name": "negro",
+    {"name": "naranja",
+    "preview": "http://localhost:4021/img/naranja.png"
+,
       "width": "",
       "height": "",
       "data": "",
@@ -56,7 +59,8 @@
         "gradient": { "linear": true, "radial": false, "color1": "#ffffff", "color2": "#ffffff", "rotation": "0" }
       }
     },
-    {"name": "morado",
+    {"name": "clasic",
+    "preview": "http://localhost:4021/img/clasic.png",
       "width": "",
       "height": "",
       "data": "",
@@ -84,7 +88,8 @@
         "gradient": { "linear": true, "radial": false, "color1": "#ffffff", "color2": "#ffffff", "rotation": "0" }
       }
     },
-    {"name": "azul",
+    {"name": "naranja-azul",
+     "preview": "http://localhost:4021/img/naranja-azul.png",
       "width": "",
       "height": "",
       "data": "",
@@ -112,7 +117,8 @@
         "gradient": { "linear": true, "radial": false, "color1": "#ffffff", "color2": "#ffffff", "rotation": "0" }
       }
     },
-    {"name": "clasico",
+    {"name": "naranja-negro",
+    "preview": "http://localhost:4021/img/naranja-negro.png",
       "width": 1200,
       "height": 1200,
       "data": "https://files.hostdime.com/",

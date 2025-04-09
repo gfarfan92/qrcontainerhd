@@ -57,7 +57,9 @@
                   :id="`style-${index}`"
                 >
                 <label :for="`style-${index}`" class="btn btn-outline-primary">
-                  <div>{{ 'Estilo ' + (index + 1) }}</div>
+                  <img :src="style.preview" alt="Preview" width="100" height="100" class="mb-2 rounded shadow-sm">
+                  <div>{{ style.name }}</div>
+             
                 </label>
               </div>
             </div>
