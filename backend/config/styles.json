@@ -30,8 +30,7 @@
       }
     },
     {"name": "naranja",
-    "preview": "http://localhost:4021/img/naranja.png"
-,
+    "preview": "/img/Naranjas.png",
       "width": "",
       "height": "",
       "data": "",
@@ -60,7 +59,7 @@
       }
     },
     {"name": "clasic",
-    "preview": "http://localhost:4021/img/clasic.png",
+    "preview": "/img/clasic.png",
       "width": "",
       "height": "",
       "data": "",
@@ -89,7 +88,7 @@
       }
     },
     {"name": "naranja-azul",
-     "preview": "http://localhost:4021/img/naranja-azul.png",
+     "preview": "/img/naranja-azul.png",
       "width": "",
       "height": "",
       "data": "",
@@ -118,7 +117,7 @@
       }
     },
     {"name": "naranja-negro",
-    "preview": "http://localhost:4021/img/naranja-negro.png",
+    "preview": "/img/naranja-negro.png",
       "width": 1200,
       "height": 1200,
       "data": "https://files.hostdime.com/",

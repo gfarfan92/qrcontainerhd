@@ -1,10 +1,11 @@
+// Tener pendiente que aca eds donde pongo el dominio
+const BASE_QR_API = process.env.QR_API_URL || 'http://localhost:4021';
+
 exports.obtenerEstilos = async (req, res) => {
   try {
-    const response = await fetch("http://localhost:4021/api/estilos");
+    const response = await fetch(`${BASE_QR_API}/api/estilos`);
 
-    if (!response.ok) {
-      throw new Error("Error al obtener estilos del backend QR");
-    }
+    if (!response.ok) throw new Error("Error al obtener estilos del backend QR");
 
     const data = await response.json();
     res.json(data);
@@ -18,7 +19,7 @@ exports.generarQR = async (req, res) => {
   const { url, personalUrl, style, size, type } = req.body;
 
   try {
-    const response = await fetch("http://localhost:4021/api/generar-qr", {
+    const response = await fetch(`${BASE_QR_API}/api/generar-qr`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ url, personalUrl, style, size, type })

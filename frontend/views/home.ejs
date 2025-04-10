@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Generador de QR con Vue 3</title>
-
+  <title>Generador de QR HostDime</title>
   <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+  
 
   <script src="https://cdn.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.js"></script>
 </head>
@@ -99,13 +100,15 @@
       </div>
 
    <!-- Imagen del QR -->
-   <div v-if="qrImage" class="text-center mt-3">
-    <!-- Para PNG -->
-    <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" /><!--si es estrictamente png traerlo con :src y mostrar--->
+ <!-- Imagen del QR -->
+<div v-if="qrImage" class="text-center mt-3">
+  <!-- PNG -->
+  <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" />
 
-    <!-- Para SVG -->
-    <object type="image/svg+xml" data="URL_DEL_SVG"></object>
-</div> 
+  <!-- SVG -->
+  <object v-else type="image/svg+xml" :data="qrImage" class="img-fluid"></object>
+</div>
+
 
  
   </div>

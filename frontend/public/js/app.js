@@ -33,7 +33,8 @@ const app = Vue.createApp({
         };
   
         try {
-            const res = await fetch("http://localhost:4021/api/generar-qr", {
+          const res = await fetch("/api/generar-qr", {
+
 
             method: "POST",
             headers: { "Content-Type": "application/json" },

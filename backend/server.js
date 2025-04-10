@@ -4,6 +4,7 @@ const path = require("path");
 const nocache = require("nocache");
 
 const { obtenerEstilosQR } = require("./config/qrConfig");
+const { DIRECTORIO_PUBLICO, DIRECTORIO_IMAGENES } = require("./config/config");
 const qrRoutes = require("./routes/qrRoutes");
 
 const app = express();
@@ -19,19 +20,12 @@ app.use(cors({
 
 app.use(express.json());
 
-// Endpoint para obtener estilos (sin cache)
-app.get("/api/estilos", (req, res) => {
-  res.set("Cache-Control", "no-store");
-  res.json(obtenerEstilosQR());
-});
+app.use("/api", qrRoutes); // incluye /generar-qr y /estilos
 
-// Endpoint para generar QR
-app.use("/api", qrRoutes); // Aquí ya manejás POST /generar-qr y otros si hay
-
-// Servir archivos estáticos (frontend)
-app.use(express.static(path.join(__dirname, "../frontend")));
-app.use("/img", express.static(path.join(__dirname, "public", "img")));
+// Rutas estáticas
+app.use(express.static(DIRECTORIO_PUBLICO));
+app.use("/img", express.static(DIRECTORIO_IMAGENES));
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
