@@ -24,6 +24,7 @@ const app = Vue.createApp({
   
       async generarQR() {
         if (!this.url) return alert("Por favor, ingresa una URL válida.");
+        //carga util, y lo manejo para capturar los datos de vue
         const payload = {
           url: this.url,
           personalUrl: this.personalUrl,
@@ -31,7 +32,7 @@ const app = Vue.createApp({
           size: parseInt(this.size),
           type: this.type
         };
-  
+  //si todo anda bien se la lanzo por puerto 3000 pa que routes/index me reciba y direccione el paquete
         try {
           const res = await fetch("/api/generar-qr", {
 

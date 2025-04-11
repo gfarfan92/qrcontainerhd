@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { RUTA_LOGO, RUTA_ESTILOS } = require("./config");
-
+//aqui voy a empezar a guardar todos mis estilos en un array, esta es mi canastica
 let estilosQR = [];
 let Wtype = {};
 
@@ -16,7 +16,7 @@ function cargarLogo() {
     Wtype = { png: null, svg: null };
   }
 }
-
+// esto es para mantener el .json(RUTA_ESTILOS) actualizado
 function cargarEstilos() {
   try {
     console.log("📦 Recargando estilos desde styles.json...");
@@ -42,7 +42,7 @@ fs.watchFile(RUTA_ESTILOS, (curr, prev) => {
     cargarEstilos();
   }
 });
-
+//aqui tomo mi canastica y empaqueto para enviar a qrcontroller.js, esta parte es buena para mantener separada la logica y no afectar mis estilos azctuales
 function obtenerEstilosQR() {
   return estilosQR;
 }
