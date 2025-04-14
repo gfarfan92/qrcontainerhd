@@ -15,6 +15,8 @@ exports.obtenerEstilos = async (req, res) => {
   }
 };
 
+
+//tomo el paquete y llevo las variables que me interesas al backend pt 4021 
 exports.generarQR = async (req, res) => {
   const { url, personalUrl, style, size, type } = req.body;
 

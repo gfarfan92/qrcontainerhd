@@ -44,7 +44,7 @@ fs.watchFile(RUTA_ESTILOS, (curr, prev) => {
 });
 //aqui tomo mi canastica y empaqueto para enviar a qrcontroller.js, esta parte es buena para mantener separada la logica y no afectar mis estilos azctuales
 function obtenerEstilosQR() {
-  return estilosQR;
+  return estilosQR;// todo  este es el estilo .json que tengo pa despues usar donde lo necesite, por ejemplo para mostrar name, preview en el navegador
 }
 
 module.exports = {
