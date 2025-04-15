@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+
 
 async function shortenUrl(url, customSlug) {
   const bodyData = { longUrl: url };
