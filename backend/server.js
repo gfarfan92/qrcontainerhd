@@ -21,12 +21,12 @@ app.use(cors({
 
 app.use(express.json());
 
-// ✅ Sesiones para guardar login temporal
+
 app.use(session({
   secret: 'clave-super-secreta',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 10 * 60 * 1000 } // 10 minutos
+  cookie: { maxAge: 10 * 60 * 1000 } 
 }));
 
 // Rutas API

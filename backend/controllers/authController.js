@@ -20,28 +20,31 @@ exports.solicitarToken = async (req,res)=>{
     const mailData = construirCorreoToken(email,token);
 
     try{
+        console.log("MailData generado:", mailData);
+
         await MicroService.Mail(mailData);
         return res.json({message: 'Token enviado a tu correo'});
     }catch (error){
-        return res.status(500).json({message : 'error al enviar el correo'});
+        console.error("Error en MicroService.Mail:", error);
+        return res.status(500).json({message : 'error al enviar el correo', error: error.message});
     }
+    
 }; 
 
 exports.validarToken = (req, res) => {
     const { email, token } = req.body;
-
-    const validacion = validateToken(email, token);
-
-    if (validacion.valido) {
-        
-        req.session.isLoggedIn = true;
-        req.session.email = email;
-
-        return res.json({ message: 'Token válido. Sesión iniciada.' });
+    const isValid = validateToken(email, token);
+  
+    console.log(`Validando token para ${email}:`, isValid);
+  
+    if (isValid) {
+      req.session.isLoggedIn = true;
+      req.session.email = email;
+      return res.json({ message: 'Token válido. Sesión iniciada.' });
     } else {
-        return res.status(401).json({ message: validacion.mensaje });
+      return res.status(401).json({ message: 'Token inválido o expirado.' });
     }
-};
+  };
 
 
 exports.reenviarToken = async(req,res)=>{

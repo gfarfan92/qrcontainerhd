@@ -1,3 +1,6 @@
+const BACKEND_API = 'http://localhost:4021/api';
+
+
 const app = Vue.createApp({
     data() {
       return {
@@ -8,10 +11,67 @@ const app = Vue.createApp({
         size: '300',
         type: 'png',
         shortUrl: '',
-        qrImage: ''
+        qrImage: '',
+
+         // esta es la logica de mi login
+    email: '',
+    token: '',
+    isLoggedIn: false,
+    tokenSent: false,
+    loginMessage: '' 
       };
     },
     methods: {
+//logica login 
+async solicitarToken() {
+  if (!this.email) return alert("Por favor, ingresa un correo válido");
+  try {
+    const res = await fetch(`${BACKEND_API}/auth/solicitar-token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: this.email })
+    });
+
+    let data;
+    try { data = await res.json() }
+    catch { throw new Error(`Server ${res.status}`) }
+
+    if (res.ok) {
+      this.tokenSent = true;
+      this.loginMessage = "Token enviado. Revisa tu correo.";
+    } else {
+      this.loginMessage = data.message;
+    }
+  } catch (err) {
+    console.error(err);
+    this.loginMessage = "Error al solicitar token";
+  }
+},
+
+async validarToken() {
+  if (!this.token) return alert("Ingresa el token");
+  try {
+    const res = await fetch(`${BACKEND_API}/auth/validar-token`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: this.email, token: this.token })
+    });
+    let data;
+    try { data = await res.json() }
+    catch { throw new Error(`Server ${res.status}`) }
+    
+    if (res.ok) {
+      this.isLoggedIn = true;
+    } else {
+      this.loginMessage = data.message;
+    }
+  } catch (err) {
+    console.error(err);
+    this.loginMessage = "Error al validar token";
+  }
+},
+//logica qr
+      
       async fetchStyles() {
         try {
           const response = await fetch("/api/estilos");

@@ -9,7 +9,8 @@ const https = require('https');
  * @author Hawinson HDCO
  * @copyright HostDime Colombia - 2023 ©
  */
-module.exports = {
+
+const MicroService = {
 
     axiosMail: null,
     /**
@@ -81,4 +82,6 @@ module.exports = {
 
         }
 
-    }}
+    }};
+
+    module.exports = MicroService;
