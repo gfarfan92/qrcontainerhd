@@ -1,36 +1,42 @@
-// Tener pendiente que aca eds donde pongo el dominio
-const BASE_QR_API = process.env.QR_API_URL || 'http://localhost:4021';
+// frontend/services/qrService.js
+const BASE_QR_API = process.env.QR_API_URL || 'http://localhost:4021/api-backend';
 
-exports.obtenerEstilos = async (req, res) => {
+/**
+ * Obtiene la lista de estilos desde el backend QR.
+ */
+async function fetchEstilos() {
   try {
-    const response = await fetch(`${BASE_QR_API}/api/estilos`);
-
-    if (!response.ok) throw new Error("Error al obtener estilos del backend QR");
-
-    const data = await response.json();
-    res.json(data);
+    const resp = await fetch(`${BASE_QR_API}/estilos`);
+    if (!resp.ok) throw new Error(`Error al obtener estilos del backend QR: ${resp.status}`);
+    return resp.json();
   } catch (err) {
-    console.error("Error en obtenerEstilos:", err);
-    res.status(500).json({ error: "No se lograron obtener los estilos desde QR HostDime" });
+    console.error(err);
+    throw new Error('Error al obtener estilos del backend QR');
   }
-};
+}
 
-
-//tomo el paquete y llevo las variables que me interesas al backend pt 4021 
-exports.generarQR = async (req, res) => {
-  const { url, personalUrl, style, size, type } = req.body;
-
+/**
+ * Genera un código QR con los parámetros dados.
+ */
+async function createQR({ url, personalUrl, style, size, type }) {
   try {
-    const response = await fetch(`${BASE_QR_API}/api/generar-qr`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    const resp = await fetch(`${BASE_QR_API}/generar-qr`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ url, personalUrl, style, size, type })
     });
-
-    const data = await response.json();
-    res.json(data);
+    if (!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.error || `Error al generar QR: ${resp.status}`);
+    }
+    return resp.json();
   } catch (err) {
-    console.error("Error en generarQR:", err);
-    res.status(500).json({ error: "No se logró generar el QR desde HostDime" });
+    console.error(err);
+    throw new Error('Error al generar QR');
   }
+}
+
+module.exports = {
+  fetchEstilos,
+  createQR
 };

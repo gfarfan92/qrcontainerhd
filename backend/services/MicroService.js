@@ -41,7 +41,7 @@ const MicroService = {
 
      */
     Mail: (dataPost, cb) => {
-
+        console.log('Enviando correo con estos datos:', dataPost);
         if (!MicroService.axiosMail) {
             MicroService.axiosMail = axiosAux.create({
                 baseURL: 'https://me.hostdime.com.co:1441/Email/mailHTML',

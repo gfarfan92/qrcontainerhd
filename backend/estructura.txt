@@ -1,0 +1,36 @@
+Folder PATH listing
+Volume serial number is F21A-3BD3
+C:.
+�   estructura.txt
+�   package.json
+�   server.js
+�   
++---config
+�       config.js
+�       qrConfig.js
+�       settingsQR.json
+�       
++---controllers
+�       b-loginController.js
+�       qrController.js
+�       
+         
++---public
+�   +---img
+�           hostdimelogo.png
+�           hostdimelogo.svg
+�           
++---routes
+�       b-loginRoutes.js
+�       qrRoutes.js
+�       
++---services
+�       b-loginService.js
+�       MicroService.js
+�       qrService.js
+�       tokenStore.js
+�       urlShortenerService.js
+�       
++---utils
+        emailBuilder.js
+        

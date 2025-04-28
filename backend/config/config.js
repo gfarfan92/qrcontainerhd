@@ -1,5 +1,4 @@
 const path = require("path");
-
 module.exports = {
   RUTA_LOGO: path.join(__dirname, "../public/img/hostdimelogo.png"),
   RUTA_ESTILOS: path.join(__dirname, "settingsQR.json"),

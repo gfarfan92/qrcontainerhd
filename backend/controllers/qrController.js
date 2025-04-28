@@ -25,3 +25,4 @@ async function generarQR(req, res) {
 }
 
 module.exports = { generarQR };
+
