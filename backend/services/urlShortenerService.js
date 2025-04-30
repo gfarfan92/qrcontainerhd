@@ -1,5 +1,3 @@
-
-
 async function shortenUrl(url, customSlug) {
   const bodyData = { longUrl: url };
   if (customSlug) {

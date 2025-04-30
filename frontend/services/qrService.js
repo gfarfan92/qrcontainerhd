@@ -1,9 +1,6 @@
-// frontend/services/qrService.js
 const BASE_QR_API = process.env.QR_API_URL || 'http://localhost:4021/api-backend';
 
-/**
- * Obtiene la lista de estilos desde el backend QR.
- */
+
 async function fetchEstilos() {
   try {
     const resp = await fetch(`${BASE_QR_API}/estilos`);
@@ -15,9 +12,6 @@ async function fetchEstilos() {
   }
 }
 
-/**
- * Genera un código QR con los parámetros dados.
- */
 async function createQR({ url, personalUrl, style, size, type }) {
   try {
     const resp = await fetch(`${BASE_QR_API}/generar-qr`, {

@@ -23,7 +23,7 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); 
 
-// 3. EJS + Layouts
+// 3. EJS + Layout(union)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(expressLayouts);
@@ -37,13 +37,11 @@ app.use('/', viewRoutes);
 app.use('/api-frontend/login', loginRoutes);
 app.use('/api-frontend/qr', qrRoutes);  
 
-// Agrega esto antes de levantar el servidor
 app.get('/', (req, res) => {
-  res.render('home');  // Asegúrate que tengas un archivo frontend/views/home.ejs
+  res.render('home');  
 });
 
 
-// 6. Levantar servidor UNA vez, al final
 app.listen(PORT, () => {
   console.log(`🔥🔥🔥 Frontend corriendo en http://localhost:${PORT} 🔥🔥🔥`);
 });

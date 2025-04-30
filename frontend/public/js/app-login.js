@@ -1,4 +1,3 @@
-// frontend/public/js/app-login.js
 const loginApp = {
   data() {
     return {

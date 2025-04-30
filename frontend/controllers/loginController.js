@@ -1,5 +1,3 @@
-// frontend/controllers/loginController.js
-
 const loginService = require('../services/loginService');
 
 async function verificarSesion(req, res) {

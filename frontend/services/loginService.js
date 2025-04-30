@@ -14,9 +14,6 @@ async function verificarSesion() {
   return await resp.json();
 }
 
-/**
- * Solicita un token al backend para el correo dado.
- */
 async function solicitarToken(email) {
   const dominios = ["@hostdime.com","@hostdime.com.co","@hostdime.co"];
   if (!dominios.some(d => email.endsWith(d))) {
@@ -33,9 +30,7 @@ async function solicitarToken(email) {
   return data;
 }
 
-/**
- * Valida un token para un email.
- */
+
 async function validarToken(email, token) {
   const resp = await fetch(`${BASE_QR_API}/validar-token`, {
     method: 'POST',
@@ -48,9 +43,6 @@ async function validarToken(email, token) {
   return data;
 }
 
-/**
- * Cierra la sesión en el backend.
- */
 async function cerrarSesion() {
   const resp = await fetch(`${BASE_QR_API}/cerrar-sesion`, {
     method: 'POST',

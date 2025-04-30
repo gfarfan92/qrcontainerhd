@@ -1,9 +1,6 @@
-// frontend/controllers/qrController.js
 const qrService = require('../services/qrService');
 
-/**
- * GET /api-frontend/qr/estilos
- */
+//pilas GET
 async function obtenerEstilos(req, res) {
   try {
     const data = await qrService.fetchEstilos();
@@ -14,12 +11,9 @@ async function obtenerEstilos(req, res) {
   }
 }
 
-/**
- * POST /api-frontend/qr/generar-qr
- */
+//POST
 async function generarQR(req, res) {
   try {
-    // Validación de los datos en el body, puedes hacerla más detallada según sea necesario
     const { url, personalUrl, style, size, type } = req.body;
     if (!url || !style || !size || !type) {
       return res.status(400).json({ error: 'Faltan parámetros necesarios para generar el QR' });
@@ -34,11 +28,10 @@ async function generarQR(req, res) {
 }
 
 async function renderHome(req, res) {
-  res.render('home');  // O el nombre de la vista que deseas renderizar
-}
+  res.render('home');  
 
 module.exports = {
   renderHome,
   obtenerEstilos,
   generarQR
-};
+}};

@@ -64,7 +64,7 @@ const app = Vue.createApp({
     }
   },
   mounted() {
-    this.fetchStyles(); // Esta línea es ahora válida
+    this.fetchStyles();
   }
 });
 

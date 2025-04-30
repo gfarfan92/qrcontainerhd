@@ -1,4 +1,3 @@
-// backend/services/sessionStore.js
 const activeSessions = {}; // email → sessionID
 
 function isSessionActive(email) {

@@ -30,17 +30,14 @@ const {
   function validarToken(req, res) {
   const { email, token } = req.body;
 
-  // Verificar si ya hay una sesión activa
   if (isSessionActive(email)) {
     return res.status(409).json({ message: 'Ya existe una sesión activa para este usuario.' });  // Usar 409 para conflicto.
   }
 
-  // Verificar si el token es válido
   if (!validateToken(email, token)) {
     return res.status(401).json({ message: 'Token inválido o expirado.' });
   }
 
-  // Login exitoso: establecer sesión
   req.session.isLoggedIn = true;
   req.session.email = email;
   createSession(email, req.sessionID);  // Crea la sesión de usuario

@@ -1,5 +1,3 @@
-// frontend/middlewares/checkAuth.js
-
 function checkAuth(req, res, next) {
     if (req.session && req.session.isLoggedIn) {
   
