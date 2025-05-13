@@ -1,4 +1,5 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\url\acortadorHelp.js
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\url\hacortador.js
+
 module.exports = {
 
   friendlyName: 'acortar Url',
@@ -28,14 +29,14 @@ module.exports = {
     }
 
     try {
-      const response = await fetch("https://qrlink.hostdi.me/rest/v3/short-urls", {
-        method: "POST",
-        headers: {
-          "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(bodyData)
-      });
+         const response = await fetch("https://qrlink.hostdi.me/rest/v3/short-urls", {
+      method: "POST",
+      headers: {
+        "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bodyData)
+    });
 
       console.log('Respuesta de la API:', response);
 

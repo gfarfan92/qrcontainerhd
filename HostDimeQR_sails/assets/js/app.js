@@ -27,7 +27,15 @@ const app = Vue.createApp({
       }
     },
 
-
+async shortUrls(){
+  try{
+    const response = await fetch('/url/cacortador');
+    if (!response.ok) throw new Error('Error al obtener shortUrl');
+    this.shortUrl=(await response.json()).shortUrl;
+  }catch (err) {
+        console.error(err);
+      }
+},
     
     // Llama a POST /api-frontend/qr/generar-qr
     async generarQR(){

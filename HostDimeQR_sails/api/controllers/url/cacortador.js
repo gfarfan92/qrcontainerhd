@@ -30,21 +30,7 @@ module.exports = {
     const { url, customSlug } = inputs;
 
     try {
-      if (customSlug) {
-        try {
-          // Intentamos eliminar el slug previo
-          await sails.helpers.url.eliminarurl.with({ customSlug });
-        } catch (deleteErr) {
-          // Si el helper devolvió 404, lo ignoramos
-          const cause = deleteErr.cause && deleteErr.cause.status;
-          if (cause === 404) {
-            sails.log.warn(`Slug "${customSlug}" no existe, se omitió la eliminación.`);
-          } else {
-            // Cualquier otro error, lo propagamos
-            throw deleteErr;
-          }
-        }
-      }
+      
 
       // Ahora creamos el nuevo shortUrl
       const shortUrl = await sails.helpers.url.hacortador.with({ url, customSlug });

@@ -21,12 +21,13 @@ module.exports = {
     const { customSlug } = inputs;
 
     try {
-      const deleteResponse = await fetch(`https://qrlink.hostdi.me/rest/v3/short-urls/${customSlug}`, {
-        method: "DELETE",
-        headers: {
-          "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
-        }
-      });
+    const deleteResponse = await fetch(`https://qrlink.hostdi.me/rest/v3/short-urls/${customSlug}`, {
+      method: "DELETE",
+      headers: {
+        "X-Api-Key": "7c24e07c7d1a-49a9-6465-937e-05e1f965",
+        "Content-Type": "application/json"
+      }
+    });
 
       // Si no existe (404), lo consideramos éxito
       if (deleteResponse.status === 404) {
