@@ -19,7 +19,7 @@ const app = Vue.createApp({
     // Llama a GET /api-frontend/qr/estilos
     async fetchStyles() {
       try {
-      const response = await fetch('/estilosqr/cobtener-estilo');
+      const response = await fetch('/estilosqr/server-styles');
         if (!response.ok) throw new Error('Error al obtener estilos');
         this.styles = (await response.json()).estilos;
       } catch (err) {
@@ -27,17 +27,8 @@ const app = Vue.createApp({
       }
     },
 
-async shortUrls(){
-  try{
-    const response = await fetch('/url/cacortador');
-    if (!response.ok) throw new Error('Error al obtener shortUrl');
-    this.shortUrl=(await response.json()).shortUrl;
-  }catch (err) {
-        console.error(err);
-      }
-},
     
-    // Llama a POST /api-frontend/qr/generar-qr
+   
     async generarQR(){
 
        console.log("Generando QR..."); 
@@ -61,7 +52,7 @@ async shortUrls(){
       };
 
       try {
-        const res = await fetch('/qr/cqr', {
+        const res = await fetch('/qr/generadorqr', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -74,10 +65,12 @@ async shortUrls(){
         
         this.shortUrl = data.shortUrl;
         this.qrImage  = data.qrImage;
-      } catch (err) {
-        console.error(err);
-        alert('Error generando el QR.');
-      }
+        
+      const modal = new bootstrap.Modal(this.$refs.qrModal);
+      modal.show();
+    } catch (error) {
+      console.error("❌ Error generando el QR", error);
+    }
     }
   },
   mounted() {
@@ -86,3 +79,4 @@ async shortUrls(){
 });
 
 app.mount('#app');
+
