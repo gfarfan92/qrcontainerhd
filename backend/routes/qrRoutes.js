@@ -1,4 +1,3 @@
-// backend/routes/qrRoutes.js
 const express = require("express");
 const router = express.Router();
 const { generarQR } = require("../controllers/qrController");

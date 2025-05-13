@@ -1,0 +1,34 @@
+module.exports = {
+
+
+  friendlyName: 'Wait',
+
+  description: 'Wait ASYNC',
+
+  inputs: {
+    ms: {
+      type: 'number',
+      example: 700,
+      description: 'The time in milliseconds to wait or pause',
+      defaultsTo:800
+    }
+  },
+
+
+  exits: {
+    success: {
+      description: 'All done.',
+    },
+  },
+
+  //Terminal:  (async ()=>{  console.log(await sails.helpers.wait.with({ms:3000}))  })()
+  //Terminal:  (async ()=>{  console.log(await sails.helpers.wait())  })()
+  fn: async function (inputs) {
+      // TODO
+      return new Promise(r => setTimeout(r, inputs.ms));
+      //return exits.success(result);
+  }
+
+
+};
+

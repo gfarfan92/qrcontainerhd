@@ -1,4 +1,3 @@
-// backend/routes/bloginRoutes.js
 const express = require('express');
 const router  = express.Router();
 const bloginController = require('../controllers/bloginController');
