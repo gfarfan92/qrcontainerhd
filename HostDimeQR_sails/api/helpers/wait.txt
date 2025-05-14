@@ -41,10 +41,10 @@ await sails.helpers.qr.generadorqrh.with({
 
 
 await sails.helpers.qr.generadorqrh({
-  url: "https://ejemplo.com",
-  style: 0,
-  size: 300,
-  type: "png",
-  customSlug: "mi"
+  "url": "https://ejemplo.com",
+  "style": 0,
+  "size": 300,
+  "type": "png",
+  "customSlug": "mi"
 });
 

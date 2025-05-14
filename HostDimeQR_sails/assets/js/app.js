@@ -1,8 +1,8 @@
 //C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\assets\js\app.js
-//import loginApp from '/js/app-login.js';
+import loginApp from '/js/app-login.js';
 
 const app = Vue.createApp({
-//  mixins: [loginApp],
+  mixins: [loginApp],
   data() {
     return {
       styles: [],
@@ -19,7 +19,7 @@ const app = Vue.createApp({
     // Llama a GET /api-frontend/qr/estilos
     async fetchStyles() {
       try {
-      const response = await fetch('/estilosqr/server-styles');
+        const response = await fetch('/estilosqr/server-styles');
         if (!response.ok) throw new Error('Error al obtener estilos');
         this.styles = (await response.json()).estilos;
       } catch (err) {
@@ -27,15 +27,15 @@ const app = Vue.createApp({
       }
     },
 
-    
-   
-    async generarQR(){
 
-       console.log("Generando QR..."); 
+
+    async generarQR() {
+
+      console.log("Generando QR...");
       //if (!this.isLoggedIn) {
-        //alert('Por favor, inicia sesión para generar un QR.');
-       // return;
-    //  }
+      //alert('Por favor, inicia sesión para generar un QR.');
+      // return;
+      //  }
 
       if (!this.url) {
         alert('Por favor, ingresa una URL válida.');
@@ -48,7 +48,7 @@ const app = Vue.createApp({
         style: this.selectedStyle,
         size: parseInt(this.size, 10),
         type: this.type,
-         customSlug:  this.personalUrl 
+        customSlug: this.personalUrl
       };
 
       try {
@@ -62,15 +62,15 @@ const app = Vue.createApp({
         console.log("Respuesta de la API:", data);
         if (!res.ok) throw new Error(data.error || 'Error generando el QR');
 
-        
+
         this.shortUrl = data.shortUrl;
-        this.qrImage  = data.qrImage;
-        
-      const modal = new bootstrap.Modal(this.$refs.qrModal);
-      modal.show();
-    } catch (error) {
-      console.error("❌ Error generando el QR", error);
-    }
+        this.qrImage = data.qrImage;
+
+        const modal = new bootstrap.Modal(this.$refs.qrModal);
+        modal.show();
+      } catch (error) {
+        console.error("❌ Error generando el QR", error);
+      }
     }
   },
   mounted() {

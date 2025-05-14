@@ -1,109 +1,115 @@
-  <!-- C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\views\pages\homepage.ejs -->
-  
-  <div id="app" class="container mt-5">
-  
-      <div class="row justify-content-center">
-        <div class="col-md-6 bg-white p-4 shadow rounded">
-          <h1 class="text-center mb-4">Generador de Código QR HostDime</h1>
+<!-- C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\views\pages\homepage.ejs -->
 
-          <!-- Input de URL -->
-          <div class="mb-3">
-            <label for="urlInput" class="form-label">Ingresa la URL</label>
-            <input type="text" id="urlInput" name="url" v-model="url" class="form-control"
-              placeholder="https://example.com" required>
-          </div>
+<div id="app" class="container mt-5">
 
-          <!-- Input de URL Personalizada -->
-          <div class="mb-3">
-            <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
-            <input type="text" id="personalUrl" name="personalUrl" v-model="personalUrl" class="form-control"
-              placeholder="Ejemplo: mi-enlace">
-          </div>
+  <div v-if="!isLoggedIn">
+    <%- include('./login') %>
+  </div>
 
-          <!-- Selección de Estilo -->
-          <div class="mb-3">
-            <label class="form-label d-block">Selecciona el Estilo</label>
-            <div class="d-flex justify-content-around flex-wrap">
-              <div v-for="(style, index) in styles" :key="index" class="text-center">
-                <input type="radio" v-model="selectedStyle" :value="index" class="btn-check" :id="`style-${index}`">
-                <label :for="`style-${index}`" class="btn btn-outline-primary">
-                  <img :src="style.preview" alt="Preview" width="100" height="100" class="mb-2 rounded shadow-sm">
-                  <div>{{ style.name }}</div>
+  <div v-else class="row justify-content-center">
 
-                </label>
-              </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6 bg-white p-4 shadow rounded">
+        <h1 class="text-center mb-4">Generador de Código QR HostDime</h1>
+
+        <!-- Input de URL -->
+        <div class="mb-3">
+          <label for="urlInput" class="form-label">Ingresa la URL</label>
+          <input type="text" id="urlInput" name="url" v-model="url" class="form-control"
+            placeholder="https://example.com" required>
+        </div>
+
+        <!-- Input de URL Personalizada -->
+        <div class="mb-3">
+          <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
+          <input type="text" id="personalUrl" name="personalUrl" v-model="personalUrl" class="form-control"
+            placeholder="Ejemplo: mi-enlace">
+        </div>
+
+        <!-- Selección de Estilo -->
+        <div class="mb-3">
+          <label class="form-label d-block">Selecciona el Estilo</label>
+          <div class="d-flex justify-content-around flex-wrap">
+            <div v-for="(style, index) in styles" :key="index" class="text-center">
+              <input type="radio" v-model="selectedStyle" :value="index" class="btn-check" :id="`style-${index}`">
+              <label :for="`style-${index}`" class="btn btn-outline-primary">
+                <img :src="style.preview" alt="Preview" width="100" height="100" class="mb-2 rounded shadow-sm">
+                <div>{{ style.name }}</div>
+
+              </label>
             </div>
           </div>
-
-          <!-- Selección de Tamaño -->
-          <div class="mb-3">
-            <label class="form-label">Tamaño</label>
-            <select v-model="size" class="form-select">
-              <option value="300">300</option>
-              <option value="500">500</option>
-              <option value="1200">1200</option>
-            </select>
-          </div>
-
-          <!-- Selección de Formato -->
-          <div class="mb-3">
-            <label class="form-label">Formato</label>
-            <select v-model="type" class="form-select">
-              <option value="svg">SVG</option>
-              <option value="png">PNG</option>
-            </select>
-          </div>
-
-          <!-- Botón para generar el QR -->
-          <div class="d-grid gap-2">
-            <button class="btn btn-success" @click="generarQR">Generar QR</button>
-          </div>
-
-          <!-- URL corta generada -->
-          <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">{{ shortUrl }}</p>
-
-          <!-- Botón de descarga -->
-          <div v-if="qrImage" class="text-center mt-3">
-            <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
-          </div>
         </div>
 
-       
-        <!-- Imagen del QR -->
+        <!-- Selección de Tamaño -->
+        <div class="mb-3">
+          <label class="form-label">Tamaño</label>
+          <select v-model="size" class="form-select">
+            <option value="300">300</option>
+            <option value="500">500</option>
+            <option value="1200">1200</option>
+          </select>
+        </div>
+
+        <!-- Selección de Formato -->
+        <div class="mb-3">
+          <label class="form-label">Formato</label>
+          <select v-model="type" class="form-select">
+            <option value="svg">SVG</option>
+            <option value="png">PNG</option>
+          </select>
+        </div>
+
+        <!-- Botón para generar el QR -->
+        <div class="d-grid gap-2">
+          <button class="btn btn-success" @click="generarQR">Generar QR</button>
+        </div>
+
+        <!-- URL corta generada -->
+        <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">{{ shortUrl }}</p>
+
+        <!-- Botón de descarga -->
         <div v-if="qrImage" class="text-center mt-3">
-          <!-- PNG -->
-          <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" />
-
-          <!-- SVG -->
-          <object v-else type="image/svg+xml" :data="qrImage" class="img-fluid"></object>
+          <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
         </div>
-
-
-
       </div>
 
-      <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" ref="qrModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="qrModalLabel">Tu código QR</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+      <!-- Imagen del QR -->
+      <div v-if="qrImage" class="text-center mt-3">
+        <!-- PNG -->
+        <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" />
+
+        <!-- SVG -->
+        <object v-else type="image/svg+xml" :data="qrImage" class="img-fluid"></object>
       </div>
-      <div class="modal-body">
-        <img :src="qrImage" alt="QR generado" class="img-fluid">
-        <p>Short URL: <a :href="shortUrl" target="_blank">{{ shortUrl }}</a></p>
+
+
+
+    </div>
+
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" ref="qrModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="qrModalLabel">Tu código QR</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <img :src="qrImage" alt="QR generado" class="img-fluid">
+            <p>Short URL: <a :href="shortUrl" target="_blank">{{ shortUrl }}</a></p>
+          </div>
+        </div>
       </div>
     </div>
+
   </div>
 </div>
- 
-  </div>
 
-<!-- Modal con Vue -->
 
-  <!-- <script  src="/js/app-login.js"></script>  -->
+<!-- <script  src="/js/app-login.js"></script>  -->
 
-  
+
 
 
 </body>

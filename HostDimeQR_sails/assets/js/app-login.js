@@ -1,3 +1,5 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\assets\js\app-login.js
+
 const loginApp = {
   data() {
     return {
@@ -10,7 +12,7 @@ const loginApp = {
   },
   methods: {
     async verificarSesion() {
-      const resp = await fetch('/login/verificar-sesion');
+      const resp = await fetch('/session/check');
       const data = await resp.json();
       if (data.logeado) {
         this.isLoggedIn = true;
@@ -22,7 +24,7 @@ const loginApp = {
       }
     },
     async solicitarToken() {
-      const resp = await fetch('/login/solicitar-token', {
+      const resp = await fetch('/token/get-token', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ email: this.email })
@@ -31,8 +33,10 @@ const loginApp = {
       this.tokenSent    = resp.ok;
       this.loginMessage = data.message;
     },
+
+
     async validarToken() {
-      const resp = await fetch('/login/validar-token', {
+      const resp = await fetch('/token/validar', {
         method: 'POST',
         headers: {'Content-Type':'application/json'},
         body: JSON.stringify({ email: this.email, token: this.token })
@@ -45,7 +49,7 @@ const loginApp = {
       this.loginMessage = data.message;
     },
     async cerrarSesion() {
-      await fetch('/login/cerrar-sesion', { method: 'POST' });
+      await fetch('/session/logout', { method: 'POST' });
       this.isLoggedIn = false;
       window.isLoggedIn = false;
       this.email      = '';
