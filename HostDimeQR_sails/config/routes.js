@@ -18,8 +18,13 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
+  '/': {
+    action: 'session/get-view'
+  },
 
-  '/': { view: 'pages/homepage' },
+
+
+
   '/debug/routes': 'debug/list-routes',
 
 

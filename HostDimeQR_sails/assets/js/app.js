@@ -1,8 +1,8 @@
 //C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\assets\js\app.js
-import loginApp from '/js/app-login.js';
+//import loginApp from '/js/app-login.js';
 
 const app = Vue.createApp({
-  mixins: [loginApp],
+  //mixins: [loginApp],
   data() {
     return {
       styles: [],
@@ -26,7 +26,43 @@ const app = Vue.createApp({
         console.error(err);
       }
     },
+   abrirSVGEnNuevaPestana() {
+    if (!this.qrImage) return alert('No hay imagen para mostrar');
 
+    // Si es PNG o SVG en base64, separar la parte base64
+    const base64Index = this.qrImage.indexOf('base64,');
+    if (base64Index === -1) {
+      alert('Formato de imagen no válido');
+      return;
+    }
+
+    // Extraemos el base64 puro
+    const base64Data = this.qrImage.substring(base64Index + 7);
+    
+    // Detectar MIME (svg o png)
+    const mimeMatch = this.qrImage.match(/^data:(image\/svg\+xml|image\/png);base64,/);
+    const mimeType = mimeMatch ? mimeMatch[1] : 'image/svg+xml'; // Por defecto SVG
+
+    // Convertir base64 a byte array
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Crear Blob
+    const blob = new Blob([byteArray], { type: mimeType });
+
+    // Crear URL
+    const blobUrl = URL.createObjectURL(blob);
+
+    // Abrir en nueva pestaña
+    window.open(blobUrl, '_blank');
+
+    // Opcional: liberar la URL después de un rato
+    setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+  },
 
 
     async generarQR() {

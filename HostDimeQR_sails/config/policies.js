@@ -17,6 +17,13 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': 'isLoggedIn', // Aplica la política a todas las acciones por defecto
+
+ 'session/get-view':true,
+ 'session/check':true,
+ 'session/post-view': true,
+ 'token/validar':true,
+
+
 
 };

@@ -5,16 +5,21 @@ module.exports = {
 
   exits: {
     success: {
-      description: 'Sesión cerrada correctamente'
+      description: 'Sesión cerrada correctamente',
     }
   },
 
   fn: async function (_, exits) {
-    this.req.session.destroy(err => {
+    const req = this.req;
+    const res = this.res;
+
+    req.session.destroy((err) => {
       if (err) {
-        return exits.success({ message: 'Error al cerrar sesión' });
+        sails.log.error('Error al cerrar sesión:', err);
+        return res.redirect('/'); // Redirige al home aunque haya error
       }
-      return exits.success({ message: 'Sesión cerrada' });
+
+      return res.redirect('/'); // Redirige al inicio (login, página pública, etc.)
     });
   }
 };

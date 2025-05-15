@@ -1,5 +1,4 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\token\token-store.js
-
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\token\store.js
 
 const tokenStore = sails.config.custom.tokenStore || (sails.config.custom.tokenStore = {});
 
@@ -9,9 +8,9 @@ module.exports = {
   description: 'Guarda el token temporalmente en memoria',
 
   inputs: {
-  token: { type: "string", required: true }, 
-  email: { type: "string", required: true }
-},
+    token: { type: "string", required: true },
+    email: { type: "string", required: true }
+  },
 
   exits: {
     success: {
@@ -29,7 +28,7 @@ module.exports = {
         token,
         expiresAt: Date.now() + 10 * 60 * 1000 // 10 minutos
       };
-      return exits.success({ message: 'Token guardado correctamente',tokenStore });
+      return exits.success({ message: 'Token guardado correctamente', tokenStore, token });
     } catch (error) {
       return exits.error(error);
     }

@@ -16,7 +16,7 @@ module.exports = {
   exits: {
     success: { description: 'QR exitoso.' },
     error:   { description: 'Ocurrió un error al crear QR.' }
-  },
+    },
 
   fn: async function ({ shortUrl, style, size, type }, exits) {
     try {

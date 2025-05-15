@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Real HostDime</title>
+</head>
+<body>
+
+      <h1>Hola, <%= nombreUsuario %>!</h1>
+  <p>Tu rol es: <%= rol %></p>
+  <a href="/demo/dashboard">Ir al generador de QR</a>
+
+  
+  <h1>Bienvenido, <%= nombreUsuario %>!</h1>
+  <p>Tu QR apunta a: <%= urlFinal %></p>
+  <img src="data:image/png;base64,<%= qrBase64 %>" alt="QR generado" />
+  <br>
+  <a href="/demo/logout">Cerrar sesión</a>
+</body>
+</html>

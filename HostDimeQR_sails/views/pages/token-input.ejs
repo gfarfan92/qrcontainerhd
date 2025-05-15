@@ -1,0 +1,8 @@
+<h2><%= titulo %></h2>
+<p>Te hemos enviado un código a: <strong><%= email %></strong></p>
+
+<form action="/token/validar" method="POST">
+  <input type="hidden" name="email" value="<%= email %>" />
+  <input type="text" name="token" placeholder="Ingresa el código" required />
+  <button type="submit">Validar Token</button>
+</form>
