@@ -22,6 +22,15 @@ module.exports.routes = {
     action: 'session/get-view'
   },
 
+  'GET /create-styles': { view: 'pages/create-styles' },
+
+  'GET    /estilosqr/server-styles': {
+    action: 'estilosqr/server-styles'
+  },
+
+
+
+  'DELETE /estilosqr/delete-styles/:styleName': 'estilosqr/delete-styles',
 
 
 

@@ -23,6 +23,8 @@ module.exports.policies = {
  'session/check':true,
  'session/post-view': true,
  'token/validar':true,
+ 'estilosqr/save-style': true,  
+ 'estilosqr/delete-styles': true, 
 
 
 

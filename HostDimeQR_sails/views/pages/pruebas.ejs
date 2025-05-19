@@ -1,0 +1,71 @@
+<!--C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\views\pages\label-styles.ejs--->
+
+   <!-- ========= Sección: Mostrar TODOS los estilos + previews QR automáticos ========= -->
+    <hr />
+
+    <h2 class="text-center mb-4">Listado de Estilos QR</h2>
+    <div class="row">
+      <!-- Recorremos cada estilo y creamos el contenedor donde luego el JS pondrá el QRCodeStyling -->
+      <div
+        class="col-sm-6 col-md-4 col-lg-3 mb-4"
+        v-for="(style, index) in styles"
+        :key="style.styleName || style.name"
+      >
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <!-- Nombre del estilo -->
+            <h5 class="card-title">
+              {{ style.styleName ? style.styleName : style.name }}
+            </h5>
+
+            <!-- Este div es el que QRCodeStyling rellenará -->
+            <div
+              :id="'qr-preview-' + index"
+              style="width: 100px; height: 100px; margin: auto;"
+            ></div>
+
+            <!-- Si styleName existe, mostramos botón eliminar -->
+            <button
+              v-if="style.styleName"
+              class="btn btn-sm btn-danger mt-2"
+              @click="deleteStyle(style.styleName)"
+            >
+              🗑️ Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ========= /Fin sección Previews automáticos ========= --> 
+
+       <div class="mb-3">
+          <label class="form-label d-block">Selecciona el Estilo</label>
+          <div class="d-flex justify-content-around flex-wrap">
+            <div
+              v-for="(style, index) in styles"
+              :key="index"
+              class="text-center me-2 mb-2"
+            >
+              <input
+                type="radio"
+                v-model="selectedStyle"
+                :value="index"
+                class="btn-check"
+                :id="`styleRadio-${index}`"
+              />
+              <label :for="`styleRadio-${index}`" class="btn btn-outline-primary">
+                <!-- Aquí muestras una imagen “preview” estática (style.preview) -->
+                <img
+                  :src="style.preview"
+                  alt="Preview"
+                  width="80"
+                  height="80"
+                  class="mb-1 rounded shadow-sm"
+                />
+                <div style="font-size: 0.9rem">
+                  {{ style.styleName ? style.styleName : style.name }}
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>

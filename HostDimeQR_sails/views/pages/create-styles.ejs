@@ -1,0 +1,82 @@
+<!---C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\views\pages\create-styles.ejs-->
+<div id="app" class="container mt-5">
+
+<div class="row justify-content-center">
+  <div class="col-md-6 bg-white p-4 shadow rounded">
+    <h3 class="mb-4">Diseño de Estilo QR</h3>
+
+    <!-- Fila 1: Estilo de puntos -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Color de puntos</label>
+        <input type="color" class="form-control form-control-color" v-model="dotsOptions.color" />
+      </div>
+      <div class="col-md-8">
+        <label class="form-label">Forma de puntos</label>
+        <select class="form-select" v-model="dotsOptions.type">
+          <option value="rounded">Rounded</option>
+          <option value="dots">Dots</option>
+          <option value="classy">Classy</option>
+          <option value="classy-rounded">Classy Rounded</option>
+          <option value="square">Square</option>
+          <option value="extra-rounded">Extra Rounded</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fila 2: Esquinas -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Color de esquinas</label>
+        <input type="color" class="form-control form-control-color" v-model="cornersSquareOptions.color" />
+      </div>
+      <div class="col-md-8">
+        <label class="form-label">Forma de esquinas</label>
+        <select class="form-select" v-model="cornersSquareOptions.type">
+          <option value="dot">Dot</option>
+          <option value="square">Square</option>
+          <option value="extra-rounded">Extra Rounded</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fila 3: Esquinas internas -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Color interno de esquinas</label>
+        <input type="color" class="form-control form-control-color" v-model="cornersDotOptions.color" />
+      </div>
+      <div class="col-md-8">
+        <label class="form-label">Forma interna de esquinas</label>
+        <select class="form-select" v-model="cornersDotOptions.type">
+          <option value="dot">Dot</option>
+          <option value="square">Square</option>
+          <option value="extra-rounded">Extra Rounded</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fila 4: Fondo -->
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Color de fondo</label>
+        <input type="color" class="form-control form-control-color" v-model="backgroundOptions.color" />
+      </div>
+    </div>
+
+    <!-- Fila 5: Nombre y botón -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <label class="form-label">Nombre del estilo</label>
+        <input type="text" class="form-control" v-model="styleName" placeholder="Ej. Azul HostDime" required />
+      </div>
+
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <button type="submit" @click="createQR" class="btn btn-primary w-100">Guardar estilo</button>
+    </div>
+
+
+  </div>
+</div>
+</div>

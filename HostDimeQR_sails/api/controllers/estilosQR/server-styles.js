@@ -1,37 +1,33 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\controllers\estilosQR\cobtener-estilo.js
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\controllers\estilosqr\server-styles.js
+
+
+
+
 module.exports = {
+  friendlyName: 'Obtener estilos',
 
-  friendlyName: 'Obtener estilo',
-
-  description: 'Devuelve un estrilo de settings.json',
+  description: 'Devuelve un listado de estilos (con preview, logo, options, etc.)',
 
   inputs: {},
 
   exits: {
     success: {
-      description: 'Todo salió bien',
+      description: 'Estilos cargados exitosamente',
     },
-    error : {
-      descripcion:'Hubo un problema al cargar los estilos'
+    error: {
+      description: 'Ocurrió un error al cargar los estilos'
     }
   },
 
   fn: async function (inputs, exits) {
-    
-
- try {
-
-  const data= await sails.helpers.loadstyles();
-  return exits.success(data);
-}catch(error){
-  sails.log.debug('error al cargar estilos en controlador',error);
-  return exits.error({error:'no se pudieron cargar los estilos'});
+    try {
+      
+      const data = await sails.helpers.loadstyles();
+      
+      return exits.success(data);
+    } catch (error) {
+      sails.log.error('Error al cargar estilos en server-styles.js:', error);
+      return exits.error({ error: 'No se pudieron cargar los estilos' });
+    }
   }
-}
-  
-
-
-
-  
-
 };
