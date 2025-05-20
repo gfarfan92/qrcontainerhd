@@ -1,0 +1,23 @@
+    <!-- C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\views\buttoms-home.ejs-->
+
+
+    <!-- Boton Generar QR -->
+    <div class="row justify-content-center my-3">
+        <div class="col-md-6 text-center mb-2">
+            <button class="btn btn-success w-100" @click="generarQR">
+                Generar QR
+            </button>
+        </div>
+
+        <!--Boton Personalizar -->
+        <div class="col-md-6 text-center mb-2">
+            <a href="/pages/create-styles" class="btn btn-primary w-100">Personalizar</a>
+
+        </div>
+    </div>
+
+
+    <!-- Botón de descarga -->
+    <div v-if="qrImage" class="text-center mt-3">
+        <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
+    </div>

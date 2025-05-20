@@ -474,5 +474,23 @@
     "backgroundOptions": {
       "color": "#ee1111"
     }
+  },
+  {
+    "styleName": "bb",
+    "dotsOptions": {
+      "color": "#000000",
+      "type": "rounded"
+    },
+    "cornersSquareOptions": {
+      "color": "#000000",
+      "type": "square"
+    },
+    "cornersDotOptions": {
+      "color": "#000000",
+      "type": "square"
+    },
+    "backgroundOptions": {
+      "color": "#ffffff"
+    }
   }
 ]
