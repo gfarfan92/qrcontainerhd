@@ -29,14 +29,15 @@ module.exports = {
 
   fn: async function (inputs, exits) {
 
-   const filePath = path.resolve(__dirname, '../../../files/getSettingsQR.json');
+   //const filePath = path.resolve(__dirname, '../../../files/getSettingsQR.json');
+   const RUTA_ESTILOS = path.join(sails.config.appPath, 'files', 'getsettingsqr.json');
 
 
     try {
       // Leer el archivo existente
       let estilos = [];
-      if (fs.existsSync(filePath)) {
-        const contenido = fs.readFileSync(filePath, 'utf8');
+      if (fs.existsSync(RUTA_ESTILOS)) {
+        const contenido = fs.readFileSync(RUTA_ESTILOS, 'utf8');
         estilos = contenido ? JSON.parse(contenido) : [];
       }
 
@@ -51,7 +52,7 @@ module.exports = {
 
       // Agregarlo al arreglo y guardar
       estilos.push(nuevoEstilo);
-      fs.writeFileSync(filePath, JSON.stringify(estilos, null, 2), 'utf8');
+      fs.writeFileSync(RUTA_ESTILOS, JSON.stringify(estilos, null, 2), 'utf8');
 
       sails.log.info('✅ Nuevo estilo guardado en JSON');
       return exits.success(nuevoEstilo);

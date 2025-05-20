@@ -31,21 +31,18 @@ module.exports = {
   fn: async function (inputs, exits) {
     const { styleName } = inputs;
 
-    // Ruta absoluta al archivo JSON
-    const filePath = path.resolve(
-      'C:/Users/GICOGERMANF/Pictures/GERMAN/funcional/qrHst/HostDimeQR_sails/files/getSettingsQR.json'
-    );
+ const RUTA_ESTILOS = path.join(sails.config.appPath, 'files', 'getsettingsqr.json');
 
     try {
       // Verificar si el archivo existe
-      if (!fs.existsSync(filePath)) {
+      if (!fs.existsSync(RUTA_ESTILOS)) {
         return exits.notFound({
           message: 'Archivo de configuración no encontrado.',
         });
       }
 
       // Leer el archivo y parsear
-      const fileContent = fs.readFileSync(filePath, 'utf-8');
+      const fileContent = fs.readFileSync(RUTA_ESTILOS, 'utf-8');
       let configArray;
       try {
         configArray = JSON.parse(fileContent);
@@ -71,7 +68,7 @@ module.exports = {
       }
 
       // Sobrescribir el archivo con el array filtrado (indentación de 2 espacios)
-      fs.writeFileSync(filePath, JSON.stringify(newArray, null, 2), 'utf-8');
+      fs.writeFileSync(RUTA_ESTILOS, JSON.stringify(newArray, null, 2), 'utf-8');
 
       return exits.success({
         message: `La configuración con styleName="${styleName}" se eliminó correctamente.`,

@@ -48,19 +48,26 @@
           </div>
         </div>
 
-        <!-- Botones Generar QR / Ir a Personalizar -->
+
+
+
+        <!-- Botones Generar QR -->
         <div class="row justify-content-center my-3">
           <div class="col-md-6 text-center mb-2">
             <button class="btn btn-success w-100" @click="generarQR">
               Generar QR
             </button>
           </div>
+
+          <!--Ir a Personalizar -->
           <div class="col-md-6 text-center mb-2">
-            <a href="/create-styles" class="btn btn-primary w-100">
-              Personalizar
-            </a>
+            <a href="/pages/create-styles" class="btn btn-primary w-100">Personalizar</a>
+
           </div>
         </div>
+
+
+
 
         <!-- URL corta generada -->
         <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">
@@ -100,18 +107,18 @@
                 Ver SVG en nueva pestaña
               </button>
 
-         
-    </div>
+
             </div>
-                 <!-- Botón de descarga -->
-        <div v-if="qrImage" class="text-center mt-3">
-          <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
-        </div>
+          </div>
+          <!-- Botón de descarga -->
+          <div v-if="qrImage" class="text-center mt-3">
+            <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
           </div>
         </div>
       </div>
     </div>
-    <!-- /Modal -->
   </div>
+  <!-- /Modal -->
+</div>
 </div>
 <!-- ========= /Fin sección Generar QR ========= -->

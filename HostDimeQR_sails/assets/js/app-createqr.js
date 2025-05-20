@@ -23,7 +23,7 @@ const create = {
 
   methods: {
     createQR() {
-      fetch('/estilosQR/save-style', {
+      fetch('/estilosqr/save-style', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -22,11 +22,9 @@ module.exports.routes = {
     action: 'session/get-view'
   },
 
-  'GET /create-styles': { view: 'pages/create-styles' },
+  //'GET /create-styles': { view: 'pages/create-styles' },
 
-  'GET    /estilosqr/server-styles': {
-    action: 'estilosqr/server-styles'
-  },
+ //'GET    /estilosqr/server-styles': {    action: 'estilosqr/server-styles'  },
 
 
 
@@ -34,7 +32,7 @@ module.exports.routes = {
 
 
 
-  '/debug/routes': 'debug/list-routes',
+ // '/debug/routes': 'debug/list-routes',
 
 
 

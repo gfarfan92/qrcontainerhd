@@ -22,7 +22,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     try {
       
-      const data = await sails.helpers.loadstyles();
+      const data = await sails.helpers.style.loadstyles();
       
       return exits.success(data);
     } catch (error) {

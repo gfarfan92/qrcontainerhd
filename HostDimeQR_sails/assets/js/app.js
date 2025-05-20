@@ -23,7 +23,7 @@ const app = Vue.createApp({
       try {
         // NOTA: fíjate que la URL coincide exactamente con la ruta en config/routes.js
         // por ejemplo: GET /estilosQR/server-styles → action: 'estilosqr/get-styles'
-        const response = await fetch('/estilosQR/server-styles');
+        const response = await fetch('/estilosqr/server-styles');
         if (!response.ok) throw new Error('Error al obtener estilos');
 
         const json = await response.json();

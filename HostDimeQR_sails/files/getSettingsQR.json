@@ -458,9 +458,9 @@
     }
   },
   {
-    "styleName": "prue3",
+    "styleName": "prueba3",
     "dotsOptions": {
-      "color": "#4ad011",
+      "color": "#d9a517",
       "type": "rounded"
     },
     "cornersSquareOptions": {
@@ -472,7 +472,7 @@
       "type": "square"
     },
     "backgroundOptions": {
-      "color": "#ffffff"
+      "color": "#ee1111"
     }
   }
 ]

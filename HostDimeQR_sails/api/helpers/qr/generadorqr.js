@@ -21,7 +21,7 @@ module.exports = {
   fn: async function ({ shortUrl, style, size, type }, exits) {
     try {
       // 1) Obtener estilos y logos desde el helper
-      const { estilos, logo } = await sails.helpers.loadstyles();
+      const { estilos, logo } = await sails.helpers.style.loadstyles();
 
       if (!estilos || !logo) {
         throw new Error("No se encontraron los estilos o los logos en el helper.");
