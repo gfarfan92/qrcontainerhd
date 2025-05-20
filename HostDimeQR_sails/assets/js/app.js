@@ -1,8 +1,13 @@
-// assets/js/app.js
+// C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\assets\js\app.js
 import createQR from '/js/app-createqr.js';
+import generarQR from '/js/app-generateqr.js';
+import deleteStyle from '/js/app-deleteqr.js';
+import stylesMixin from '/js/app-getstyles.js';
+
 
 const app = Vue.createApp({
-  mixins: [createQR],
+  mixins: [createQR,generarQR,deleteStyle,stylesMixin],
+
 
   data() {
     return {
@@ -19,58 +24,7 @@ const app = Vue.createApp({
 
   methods: {
     // 1) Obtener todos los estilos para poblar this.styles
-    async fetchStyles() {
-      try {
-        // NOTA: fíjate que la URL coincide exactamente con la ruta en config/routes.js
-        // por ejemplo: GET /estilosQR/server-styles → action: 'estilosqr/get-styles'
-        const response = await fetch('/estilosqr/server-styles');
-        if (!response.ok) throw new Error('Error al obtener estilos');
-
-        const json = await response.json();
-        this.styles = json.estilos || [];
-
-        // Una vez que Vue haya renderizado el DOM (los divs qr-preview-{index}),
-        // llamamos a renderizarPreviews para meter los QRCodeStyling en cada contenedor.
-        this.$nextTick(() => {
-          this.renderizarPreviews();
-        });
-      } catch (err) {
-        console.error('fetchStyles:', err);
-      }
-    },
-
-    // ─── 2) Dibujar el preview de cada estilo ───
-    renderizarPreviews() {
-      // Verificamos que QRCodeStyling exista (viene de la UMD Browser que cargamos en layout)
-      if (typeof QRCodeStyling !== 'function') {
-        console.error('QRCodeStyling no está disponible');
-        return;
-      }
-
-      this.styles.forEach((style, index) => {
-        // Creamos una nueva instancia de QRCodeStyling para cada estilo
-        const qr = new QRCodeStyling({
-          width: 100,
-          height: 100,
-          data: "https://www.hostdime.com.co/nebula-dc",
-          image: style.image || null,
-          imageOptions: { crossOrigin: "anonymous" },
-          dotsOptions: style.dotsOptions || {},
-          cornersSquareOptions: style.cornersSquareOptions || {},
-          cornersDotOptions: style.cornersDotOptions || {},
-          backgroundOptions: style.backgroundOptions || {}
-        });
-
-        const elemento = document.getElementById(`qr-preview-${index}`);
-        if (elemento) {
-          // Limpiamos el contenedor (por si quedó algo) y luego agregamos el QR
-          elemento.innerHTML = '';
-          qr.append(elemento);
-        }
-      });
-    },
-
-
+   
     abrirSVGEnNuevaPestana() {
       if (!this.qrImage) return alert('No hay imagen para mostrar');
 
@@ -96,84 +50,10 @@ const app = Vue.createApp({
       setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
     },
 
-    async generarQR() {
-      console.log("Generando QR...");
-      if (!this.url) {
-        alert('Por favor, ingresa una URL válida.');
-        return;
-      }
+    
 
-      const payload = {
-        url: this.url,
-        personalUrl: this.personalUrl,
-        style: this.selectedStyle,
-        size: parseInt(this.size, 10),
-        type: this.type,
-        customSlug: this.personalUrl
-      };
-
-      try {
-        const res = await fetch('/qr/generadorqr', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        const data = await res.json();
-        console.log("Respuesta de la API:", data);
-        if (!res.ok) throw new Error(data.error || 'Error generando el QR');
-
-        this.shortUrl = data.shortUrl;
-        this.qrImage = data.qrImage;
-        const modal = new bootstrap.Modal(this.$refs.qrModal);
-        modal.show();
-      } catch (error) {
-        console.error("❌ Error generando el QR", error);
-      }
-    },
-
-    // 4) Eliminar un estilo llamando al endpoint DELETE
-    async deleteStyle(styleName) {
-      if (!confirm(`¿Seguro que quieres eliminar "${styleName}"?`)) return;
-      try {
-        const res = await fetch(
-          `/estilosqr/delete-styles/${encodeURIComponent(styleName)}`,
-          {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
-        if (!res.ok) {
-          const contentType = res.headers.get('content-type');
-          if (contentType && contentType.includes('application/json')) {
-            const errData = await res.json();
-            throw new Error(errData.message || 'Error eliminando estilo');
-          } else {
-            const text = await res.text();
-            throw new Error(`Respuesta inesperada: ${text}`);
-          }
-        }
-
-
-
-        // Si todo salió ok, removemos el estilo del arreglo local y volvemos a dibujar previews
-        this.styles = this.styles.filter(s => s.styleName !== styleName);
-        this.$nextTick(() => {
-          // Limpiamos previamente los contenedores de preview viejos
-          this.styles.forEach((_, idx) => {
-            const el = document.getElementById(`qr-preview-${idx}`);
-            if (el) el.innerHTML = '';
-          });
-          // Volvemos a generar previews con la lista actualizada
-          this.renderizarPreviews();
-        });
-
-        alert(`"${styleName}" eliminado correctamente.`);
-      } catch (err) {
-        console.error('deleteStyle:', err);
-        alert(err.message || 'Error eliminando el estilo');
-      }
-    }
+    
+ 
   },
 
   mounted() {
