@@ -456,59 +456,5 @@
     "backgroundOptions": {
       "color": "#ffffff"
     }
-  },
-  {
-    "styleName": "prueba3",
-    "dotsOptions": {
-      "color": "#d9a517",
-      "type": "rounded"
-    },
-    "cornersSquareOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "cornersDotOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "backgroundOptions": {
-      "color": "#ee1111"
-    }
-  },
-  {
-    "styleName": "bb",
-    "dotsOptions": {
-      "color": "#000000",
-      "type": "rounded"
-    },
-    "cornersSquareOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "cornersDotOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "backgroundOptions": {
-      "color": "#ffffff"
-    }
-  },
-  {
-    "styleName": "prueba4",
-    "dotsOptions": {
-      "color": "#0f97ff",
-      "type": "rounded"
-    },
-    "cornersSquareOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "cornersDotOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "backgroundOptions": {
-      "color": "#ffffff"
-    }
   }
 ]
