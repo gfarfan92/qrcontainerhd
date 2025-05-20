@@ -1,42 +1,31 @@
 <!-- C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\views\pages\homepage.ejs -->
 
-  <div id="app" class="container mt-5">
-    <!-- ========= Sección: Formulario Generar QR ========= -->
-    <div class="row justify-content-center">
-      <div class="col-md-6 bg-white p-4 shadow rounded">
-        <h1 class="text-center mb-4">Generador de Código QR HostDime</h1>
-        <div class="text-end mb-3">
-          <form method="POST" action="/session/logout">
-            <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
-          </form>
-        </div>
+<div id="app" class="container mt-5">
+  <!-- ========= Sección: Formulario Generar QR ========= -->
+  <div class="row justify-content-center">
+    <div class="col-md-6 bg-white p-4 shadow rounded">
+      <h1 class="text-center mb-4">Generador de Código QR HostDime</h1>
+      <div class="text-end mb-3">
+        <form method="POST" action="/session/logout">
+          <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+        </form>
+      </div>
 
-        <!-- Input de URL -->
-        <div class="mb-3">
-          <label for="urlInput" class="form-label">Ingresa la URL</label>
-          <input
-            type="text"
-            id="urlInput"
-            v-model="url"
-            class="form-control"
-            placeholder="https://example.com"
-            required
-          />
-        </div>
+      <!-- Input de URL -->
+      <div class="mb-3">
+        <label for="urlInput" class="form-label">Ingresa la URL</label>
+        <input type="text" id="urlInput" v-model="url" class="form-control" placeholder="https://example.com"
+          required />
+      </div>
 
-        <!-- Input de URL Personalizada -->
-        <div class="mb-3">
-          <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
-          <input
-            type="text"
-            id="personalUrl"
-            v-model="personalUrl"
-            class="form-control"
-            placeholder="Ejemplo: mi-enlace"
-          />
-        </div>
-<!-- Selección estilo traido desde label-styles.ejs  -->
-     <%- include('./label-styles') %>
+      <!-- Input de URL Personalizada -->
+      <div class="mb-3">
+        <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
+        <input type="text" id="personalUrl" v-model="personalUrl" class="form-control"
+          placeholder="Ejemplo: mi-enlace" />
+      </div>
+      <!-- Selección estilo traido desde label-styles.ejs  -->
+      <%- include('./label-styles') %>
 
 
 
@@ -78,60 +67,51 @@
           {{ shortUrl }}
         </p>
 
-        <!-- Modal para mostrar el QR generado -->
-        <div
-          class="modal fade"
-          id="qrModal"
-          tabindex="-1"
-          aria-labelledby="qrModalLabel"
-          aria-hidden="true"
-          ref="qrModal"
-        >
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="qrModalLabel">Tu código QR</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                ></button>
-              </div>
-              <div class="modal-body text-center">
-                <img
-                  v-if="type === 'png'"
-                  :src="qrImage"
-                  alt="Código QR"
-                  class="img-fluid"
-                />
-                <p v-if="type === 'png'">
-                  Short URL:
-                  <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
-                </p>
-                <div v-else>
-                  <!-- Para SVG mostramos el mismo <img> (es base64) y un botón para abrir en nueva pestaña -->
-                  <img
-                    :src="qrImage"
-                    alt="Código QR SVG"
-                    class="img-fluid mb-2"
-                  />
-                  <p>
-                    Short URL:
-                    <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
-                  </p>
-                  <button
-                    class="btn btn-primary"
-                    @click="abrirSVGEnNuevaPestana"
-                  >
-                    Ver SVG en nueva pestaña
-                  </button>
-                </div>
-              </div>
+        <!-- Botón de descarga -->
+        <div v-if="qrImage" class="text-center mt-3">
+          <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
+        </div>
+    </div>
+
+
+    <!-- Modal para mostrar el QR generado -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" ref="qrModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="qrModalLabel">Tu código QR</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body text-center">
+            <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" />
+            <p v-if="type === 'png'">
+              Short URL:
+              <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
+            </p>
+            <div v-else>
+              <!-- Para SVG mostramos el mismo <img> (es base64) y un botón para abrir en nueva pestaña -->
+              <img :src="qrImage" alt="Código QR SVG" class="img-fluid mb-2" />
+              <p>
+                Short URL:
+                <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
+              </p>
+              <button class="btn btn-primary" @click="abrirSVGEnNuevaPestana">
+                Ver SVG en nueva pestaña
+              </button>
+
+         
+    </div>
             </div>
+                 <!-- Botón de descarga -->
+        <div v-if="qrImage" class="text-center mt-3">
+          <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
+        </div>
           </div>
         </div>
-        <!-- /Modal -->
       </div>
     </div>
-    <!-- ========= /Fin sección Generar QR ========= -->
-
+    <!-- /Modal -->
+  </div>
+</div>
+<!-- ========= /Fin sección Generar QR ========= -->
