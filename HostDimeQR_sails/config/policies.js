@@ -10,12 +10,6 @@
 
 module.exports.policies = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Default policy for all controllers and actions, unless overridden.       *
-  * (`true` allows public access)                                            *
-  *                                                                          *
-  ***************************************************************************/
 
   '*': 'isLoggedIn', // Aplica la política a todas las acciones por defecto
 

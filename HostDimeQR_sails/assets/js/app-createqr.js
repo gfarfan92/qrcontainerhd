@@ -87,7 +87,7 @@ const create = {
     },
 
     createQR() {
-     
+
       fetch('/estilosqr/save-style', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -99,16 +99,18 @@ const create = {
           backgroundOptions: this.backgroundOptions,
         }),
       })
-      .then(res => {
-        if (!res.ok) throw new Error('Error al guardar estilo');
-        return res.json();
-      })
-      .then(data => {
-        alert('Estilo guardado exitosamente ✅');
-      })
-      .catch(err => {
-        alert('Error al guardar el estilo ❌');
-      });
+        .then(response => response.json())
+        .then(data => {
+          if (data.success && data.redirectTo) {
+            window.location.href = data.redirectTo;
+          } else {
+            alert('Error al guardar estilo');
+          }
+        })
+        .catch(err => {
+          console.error('Error:', err);
+          alert('Error al guardar estilo');
+        });
     },
   },
 };

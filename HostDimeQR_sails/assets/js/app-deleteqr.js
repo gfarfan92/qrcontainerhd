@@ -9,7 +9,7 @@ export default {
        const res = await fetch('/estilosqr/delete-styles', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ styleName })  // Aquí mandas el styleName en body
+      body: JSON.stringify({ styleName })  
     });
         if (!res.ok) {
           const contentType = res.headers.get('content-type');

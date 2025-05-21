@@ -43,7 +43,9 @@ module.exports = {
       cornersDotOptions,
       backgroundOptions,
     });
-    return exits.success({ mensaje: 'Estilo guardado correctamente' });
+    return this.res.json({ success: true, redirectTo: '/session/homepage' });
+
+
 
 
 
