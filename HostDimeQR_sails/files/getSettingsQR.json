@@ -440,39 +440,21 @@
     }
   },
   {
-    "styleName": "gg",
+    "styleName": "prueba5r ",
     "dotsOptions": {
-      "color": "#000000",
-      "type": "rounded"
+      "color": "#326f95",
+      "type": "dots"
     },
     "cornersSquareOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "cornersDotOptions": {
-      "color": "#000000",
-      "type": "square"
-    },
-    "backgroundOptions": {
-      "color": "#ffffff"
-    }
-  },
-  {
-    "styleName": "prueba4",
-    "dotsOptions": {
-      "color": "#c93131",
-      "type": "classy-rounded"
-    },
-    "cornersSquareOptions": {
-      "color": "#b7f312",
+      "color": "#f97910",
       "type": "extra-rounded"
     },
     "cornersDotOptions": {
-      "color": "#5a19f0",
-      "type": "square"
+      "color": "#415b86",
+      "type": "extra-rounded"
     },
     "backgroundOptions": {
-      "color": "#f2b0da"
+      "color": "#ffffff"
     }
   }
 ]

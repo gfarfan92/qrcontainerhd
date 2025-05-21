@@ -28,7 +28,7 @@ module.exports = {
 
  fn: async function ({ styleName }, exits) {
   try {
-    const cleanName = styleName.replace(/\.json$/, '');
+ 
     const resultado = await sails.helpers.style.deletes.with({ styleName });
     return exits.success({ message: 'Estilo eliminado', data: resultado });
   } catch (err) {

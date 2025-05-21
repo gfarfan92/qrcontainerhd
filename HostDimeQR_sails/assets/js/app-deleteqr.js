@@ -6,13 +6,11 @@ export default {
      async deleteStyle(styleName) {
       if (!confirm(`¿Seguro que quieres eliminar "${styleName}"?`)) return;
       try {
-        const res = await fetch(
-          `/estilosqr/delete-styles/${encodeURIComponent(styleName)}`,
-          {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' }
-          }
-        );
+       const res = await fetch('/estilosqr/delete-styles', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ styleName })  // Aquí mandas el styleName en body
+    });
         if (!res.ok) {
           const contentType = res.headers.get('content-type');
           if (contentType && contentType.includes('application/json')) {
