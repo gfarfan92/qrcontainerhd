@@ -456,5 +456,23 @@
     "backgroundOptions": {
       "color": "#ffffff"
     }
+  },
+  {
+    "styleName": "prueba4",
+    "dotsOptions": {
+      "color": "#c93131",
+      "type": "classy-rounded"
+    },
+    "cornersSquareOptions": {
+      "color": "#b7f312",
+      "type": "extra-rounded"
+    },
+    "cornersDotOptions": {
+      "color": "#5a19f0",
+      "type": "square"
+    },
+    "backgroundOptions": {
+      "color": "#f2b0da"
+    }
   }
 ]
