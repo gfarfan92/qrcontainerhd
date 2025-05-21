@@ -21,8 +21,8 @@ module.exports = {
   },
 
   fn: async function (inputs, exits) {
-    const RUTA_LOGO = path.join(sails.config.appPath, 'assets', 'images', 'hostdimelogo.png');
-
+    const RUTA_LOGO_PNG = path.join(sails.config.appPath, 'assets', 'images', 'hostdimelogo.png');
+ const RUTA_LOGO_SVG = path.join(sails.config.appPath, 'assets', 'images', 'hostdime.svg');
     const RUTA_ESTILOS = path.join(sails.config.appPath, 'files', 'getsettingsqr.json');
 
 
@@ -30,11 +30,13 @@ module.exports = {
     let Wtype = {};
 
       try {
-        console.log("🧭 Ruta al logo:", RUTA_LOGO);
-        const logoBase64 = await fs.promises.readFile(RUTA_LOGO, { encoding: 'base64' });
+        console.log("🧭 Ruta al logo:", RUTA_LOGO_SVG);
+        console.log("🧭 Ruta al logo:", RUTA_LOGO_PNG);
+         const logoBase64PNG = await fs.promises.readFile(RUTA_LOGO_PNG, { encoding: 'base64' });
+      const logoBase64SVG = await fs.promises.readFile(RUTA_LOGO_SVG, { encoding: 'base64' });
         Wtype = {
-          png: `data:image/png;base64,${logoBase64}`,
-          svg: `data:image/svg+xml;base64,${logoBase64}`
+          png: `data:image/png;base64,${logoBase64PNG}`,
+          svg: `data:image/svg+xml;base64,${logoBase64SVG}`
         };
       } catch (error) {
         sails.log.debug('Error al cargar logo', error);
@@ -49,7 +51,7 @@ module.exports = {
         const estilos = JSON.parse(data);
         estilosQR = estilos.map(estilo => ({
           ...estilo,
-          image: Wtype.png // Asegurarse de que se use el logo cargado
+          image: null
         }));
         sails.log.debug('✅ Estilos cargados exitosamente');
       } catch (error) {
