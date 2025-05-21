@@ -51,7 +51,7 @@ module.exports = {
         const estilos = JSON.parse(data);
         estilosQR = estilos.map(estilo => ({
           ...estilo,
-          image: null
+          image: Wtype.png 
         }));
         sails.log.debug('✅ Estilos cargados exitosamente');
       } catch (error) {
