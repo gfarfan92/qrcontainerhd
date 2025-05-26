@@ -368,5 +368,23 @@
     "backgroundOptions": {
       "color": "#bfc7e8"
     }
+  },
+  {
+    "styleName": "prueba2",
+    "dotsOptions": {
+      "color": "#e71384",
+      "type": "extra-rounded"
+    },
+    "cornersSquareOptions": {
+      "color": "#e7c208",
+      "type": "dot"
+    },
+    "cornersDotOptions": {
+      "color": "#636df2",
+      "type": "extra-rounded"
+    },
+    "backgroundOptions": {
+      "color": "#ffffff"
+    }
   }
 ]
