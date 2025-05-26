@@ -24,15 +24,15 @@ export default {
 
 
 
-        // Si todo salió ok, removemos el estilo del arreglo local y volvemos a dibujar previews
+      
         this.styles = this.styles.filter(s => s.styleName !== styleName);
         this.$nextTick(() => {
-          // Limpiamos previamente los contenedores de preview viejos
+       
           this.styles.forEach((_, idx) => {
             const el = document.getElementById(`qr-preview-${idx}`);
             if (el) el.innerHTML = '';
           });
-          // Volvemos a generar previews con la lista actualizada
+        
           this.renderizarPreviews();
         });
 

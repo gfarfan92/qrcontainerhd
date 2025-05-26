@@ -351,23 +351,22 @@
       }
     }
   },
- 
   {
-    "styleName": "prueba5r ",
+    "styleName": "Prueba",
     "dotsOptions": {
-      "color": "#326f95",
-      "type": "dots"
+      "color": "#f10e0e",
+      "type": "classy-rounded"
     },
     "cornersSquareOptions": {
-      "color": "#f97910",
+      "color": "#18dc40",
       "type": "extra-rounded"
     },
     "cornersDotOptions": {
-      "color": "#415b86",
+      "color": "#e6d40a",
       "type": "extra-rounded"
     },
     "backgroundOptions": {
-      "color": "#ffffff"
+      "color": "#bfc7e8"
     }
   }
 ]

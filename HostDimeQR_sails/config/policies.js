@@ -10,15 +10,18 @@
 
 module.exports.policies = {
 
+  /***************************************************************************
+  *                                                                          *
+  * Default policy for all controllers and actions, unless overridden.       *
+  * (`true` allows public access)                                            *
+  *                                                                          *
+  ***************************************************************************/
 
   '*': 'isLoggedIn', // Aplica la política a todas las acciones por defecto
 
- 'session/get-view':true,
- 'session/check':true,
- 'session/post-view': true,
- 'token/validar':true,
 
-
+  'demo/login-simulate': true,
+  'demo/show-login':true,
 
 
 };
