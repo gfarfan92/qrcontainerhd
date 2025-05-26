@@ -17,6 +17,10 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
   'session/get-view': true,
+  'session/check': true,
+  'session/post-view': true,
+  'token/validar': true,
+  
   '*': 'isLoggedIn',
 
 
