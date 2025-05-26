@@ -1,4 +1,4 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\url\hacortador.js
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\url\acortador.js
 
 module.exports = {
 
