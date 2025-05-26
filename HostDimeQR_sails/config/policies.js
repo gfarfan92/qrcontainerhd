@@ -23,9 +23,7 @@ module.exports.policies = {
   
   '*': 'isLoggedIn',
 
-
-  'demo/login-simulate': true,
-  'demo/show-login': true,
+'utm/generate':true,
 
 
 };

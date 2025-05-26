@@ -1,0 +1,78 @@
+<div class="row justify-content-center m-5">
+
+    <div class="mb-3">
+
+
+      <label for="urlInput" class="form-label">Ingresa la URL</label>
+      <input
+        type="text"
+        id="urlInput"
+        name="url"
+        class="form-control"
+        v-model="url" 
+        placeholder="https://example.com"
+        required
+      />
+
+
+      <label for="source" class="form-label">utm_source</label>
+      <input
+        type="text"
+        id="source"
+        name="utm_source"
+        v-model="utm_source" 
+        class="form-control"
+        style="width: 350px;"
+      />
+
+
+      <label for="medium" class="form-label">utm_medium</label>
+      <input
+        type="text"
+        id="medium"
+        name="utm_medium"
+        v-model="utm_medium" 
+        class="form-control"
+        style="width: 350px;"
+      />
+
+     
+      <label for="campaign" class="form-label">utm_campaign</label>
+      <input
+        type="text"
+        id="campaign"
+        name="utm_campaign"
+        v-model="utm_campaign" 
+        class="form-control"
+        style="width: 350px;"
+      />
+
+
+      <label for="term" class="form-label">utm_term</label>
+      <input
+        type="text"
+        id="term"
+        name="utm_term"
+        v-model="utm_term" 
+        class="form-control"
+        style="width: 350px;"
+      />
+
+   
+      <label for="content" class="form-label">utm_content</label>
+      <input
+        type="text"
+        id="content"
+        name="utm_content"
+        v-model="utm_content" 
+        class="form-control"
+        style="width: 350px;"
+      />
+
+    </div>
+
+    <button class="btn btn-primary" @click="generateutm">
+      Generar URL con UTM
+    </button>
+  
+</div>

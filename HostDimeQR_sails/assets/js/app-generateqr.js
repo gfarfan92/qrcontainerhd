@@ -11,7 +11,7 @@ export default{
       }
 
       const payload = {
-        url: this.url,
+        url: this.utmUrlGenerada,
         personalUrl: this.personalUrl,
         style: this.selectedStyle,
         size: parseInt(this.size, 10),

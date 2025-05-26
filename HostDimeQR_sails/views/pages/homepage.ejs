@@ -12,48 +12,49 @@
       </div>
 
       <!-- Input de URL -->
-      <div class="mb-3">
-        <label for="urlInput" class="form-label">Ingresa la URL</label>
-        <input type="text" id="urlInput" v-model="url" class="form-control" placeholder="https://example.com"
-          required />
-      </div>
-
-      <!-- Input de URL Personalizada -->
-      <div class="mb-3">
-        <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
-        <input type="text" id="personalUrl" v-model="personalUrl" class="form-control"
-          placeholder="Ejemplo: mi-enlace" />
-      </div>
-      <!-- Selección estilo traido desde label-styles.ejs  -->
-      <%- include('./label-styles') %>
-
-
-
-        <!-- Selección de Tamaño y Formato -->
-        <div class="mb-3 row">
-          <div class="col-sm-6">
-            <label for="sizeInput" class="form-label">Tamaño (px)</label>
-            <select v-model="size" id="sizeInput" class="form-select">
-              <option value="300">300</option>
-              <option value="500">500</option>
-              <option value="1200">1200</option>
-            </select>
-          </div>
-          <div class="col-sm-6">
-            <label for="typeSelect" class="form-label">Formato</label>
-            <select v-model="type" id="typeSelect" class="form-select">
-              <option value="svg">SVG</option>
-              <option value="png">PNG</option>
-            </select>
-          </div>
+      <%- include('../partials/utm') %>
+        <div v-if="utmUrlGenerada">
+          <label>URL:</label>
+          <p>{{ utmUrlGenerada }}</p>
         </div>
 
-        <!-- Selección botones traido desde buttom-home.ejs.ejs  -->
-        <%- include('./buttoms-home') %>
-          <!-- URL corta generada -->
-          <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">
-            {{ shortUrl }}
-          </p>
+
+        <!-- Input de URL Personalizada -->
+        <div class="mb-3">
+          <label for="personalUrl" class="form-label">URL personalizada (opcional)</label>
+          <input type="text" id="personalUrl" v-model="personalUrl" class="form-control"
+            placeholder="Ejemplo: mi-enlace" />
+        </div>
+        <!-- Selección estilo traido desde label-styles.ejs  -->
+        <%- include('./label-styles') %>
+
+
+
+          <!-- Selección de Tamaño y Formato -->
+          <div class="mb-3 row">
+            <div class="col-sm-6">
+              <label for="sizeInput" class="form-label">Tamaño (px)</label>
+              <select v-model="size" id="sizeInput" class="form-select">
+                <option value="300">300</option>
+                <option value="500">500</option>
+                <option value="1200">1200</option>
+              </select>
+            </div>
+            <div class="col-sm-6">
+              <label for="typeSelect" class="form-label">Formato</label>
+              <select v-model="type" id="typeSelect" class="form-select">
+                <option value="svg">SVG</option>
+                <option value="png">PNG</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Selección botones traido desde buttom-home.ejs.ejs  -->
+          <%- include('./buttoms-home') %>
+            <!-- URL corta generada -->
+            <p v-if="shortUrl" class="mt-3 text-center text-primary fw-bold">
+              {{ shortUrl }}
+            </p>
     </div>
 
 

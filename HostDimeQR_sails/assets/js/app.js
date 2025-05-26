@@ -3,10 +3,11 @@ import createQR from '/js/app-createqr.js';
 import generarQR from '/js/app-generateqr.js';
 import deleteStyle from '/js/app-deleteqr.js';
 import stylesMixin from '/js/app-getstyles.js';
+import generateutm from '/js/utm/app-utm.js';
 
 
 const app = Vue.createApp({
-  mixins: [createQR,generarQR,deleteStyle,stylesMixin],
+  mixins: [createQR,generarQR,deleteStyle,stylesMixin,generateutm],
 
 
   data() {
@@ -18,7 +19,13 @@ const app = Vue.createApp({
       size: '300',
       type: 'png',
       shortUrl: '',
-      qrImage: ''
+      qrImage: '',
+      utm_source:'',
+      utm_medium:'',
+      utm_campaign:'',
+      utm_term:'',
+      utm_content:'',
+      utmUrlGenerada:'',
     };
   },
 

@@ -4,28 +4,15 @@
   <label class="form-label d-block">Selecciona el Estilo</label>
   <div class="d-flex justify-content-around flex-wrap">
     <div v-for="(style, index) in styles" :key="index" class="text-center me-2 mb-2">
-      <input
-        type="radio"
-        v-model="selectedStyle"
-        :value="index"
-        class="btn-check"
-        :id="`styleRadio-${index}`"
-      />
+      <input type="radio" v-model="selectedStyle" :value="index" class="btn-check" :id="`styleRadio-${index}`" />
       <label :for="`styleRadio-${index}`" class="btn btn-outline-primary">
-         <div
-            :id="'qr-preview-' + index"
-            style="width: 100px; height: 100px; margin: auto;"
-          ></div>
+        <div :id="'qr-preview-' + index" style="width: 100px; height: 100px; margin: auto;"></div>
         <div style="font-size: 0.9rem">
           {{ style.styleName ? style.styleName : style.name }}
         </div>
-        <button
-              v-if="style.styleName"
-              class="btn btn-sm btn-danger mt-2"
-              @click="deleteStyle(style.styleName)"
-            >
-              🗑️ Eliminar
-            </button>
+        <button v-if="style.styleName" class="btn btn-sm btn-danger mt-2" @click="deleteStyle(style.styleName)">
+          🗑️ Eliminar
+        </button>
       </label>
     </div>
   </div>
