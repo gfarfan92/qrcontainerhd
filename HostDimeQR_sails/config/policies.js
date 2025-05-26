@@ -16,12 +16,12 @@ module.exports.policies = {
   * (`true` allows public access)                                            *
   *                                                                          *
   ***************************************************************************/
-
-  '*': 'isLoggedIn', // Aplica la política a todas las acciones por defecto
+  'session/get-view': true,
+  '*': 'isLoggedIn',
 
 
   'demo/login-simulate': true,
-  'demo/show-login':true,
+  'demo/show-login': true,
 
 
 };

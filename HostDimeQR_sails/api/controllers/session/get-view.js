@@ -23,7 +23,9 @@ success:{
 
   fn: async function (inputs) {
 
-    
+  
+
+
     return{
       titulo:'Bienvenido a Qr HostDime login'
     };
