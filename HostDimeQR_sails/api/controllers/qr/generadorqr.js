@@ -1,4 +1,4 @@
-// api/controllers/qr/cqr.js
+// C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\controllers\qr\generadorqr.js
 
 module.exports = {
   friendlyName: 'Crear qr',

@@ -4,10 +4,11 @@ import generarQR from '/js/app-generateqr.js';
 import deleteStyle from '/js/app-deleteqr.js';
 import stylesMixin from '/js/app-getstyles.js';
 import generateutm from '/js/utm/app-utm.js';
+import svg from '/js/svg/app-svg.js';
 
 
 const app = Vue.createApp({
-  mixins: [createQR,generarQR,deleteStyle,stylesMixin,generateutm],
+  mixins: [createQR,generarQR,deleteStyle,stylesMixin,generateutm,svg,],
 
 
   data() {
@@ -64,9 +65,35 @@ const app = Vue.createApp({
   },
 
   mounted() {
-    // Al montarse el componente, solicitamos todos los estilos
-    this.fetchStyles();
+  // para mis estilos
+  this.fetchStyles();
+
+  //utm
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const utmK = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_id', 'utm_term', 'utm_content'];
+    const utms = {};
+    for (const key of utmK) {
+      const value = params.get(key);
+      if (value) utms[key] = value;
+    }
+
+    if (Object.keys(utms).length === 0) return;
+
+    document.querySelectorAll("a[href]").forEach((i) => {
+      if (i.href.indexOf("http") !== -1) {
+        let url = new URL(i.href);
+        for (const [key, value] of Object.entries(utms)) {
+          url.searchParams.set(key, value);
+        }
+        i.href = url.toString();
+      }
+    });
+  } catch (e) {
+    console.error("Error propagando parámetros UTM: ", e);
   }
+}
+
 });
 
 app.mount('#app');

@@ -1,3 +1,5 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\qr\generadorqr.js
+
 const { QRCodeStyling } = require("qr-code-styling/lib/qr-code-styling.common");
 const nodeCanvas = require("canvas");
 const { JSDOM } = require("jsdom");
@@ -8,15 +10,15 @@ module.exports = {
 
   inputs: {
     shortUrl: { type: 'string', required: true },
-    style:    { type: 'number', required: true },
-    size:     { type: 'number', required: true },
-    type:     { type: 'string', required: true }, // png o svg
+    style: { type: 'number', required: true },
+    size: { type: 'number', required: true },
+    type: { type: 'string', required: true }, // png o svg
   },
 
   exits: {
     success: { description: 'QR exitoso.' },
-    error:   { description: 'Ocurrió un error al crear QR.' }
-    },
+    error: { description: 'Ocurrió un error al crear QR.' }
+  },
 
   fn: async function ({ shortUrl, style, size, type }, exits) {
     try {
@@ -52,6 +54,7 @@ module.exports = {
       });
 
       const buffer = await qrCode.getRawData(type);
+      sails.log.debug(' Tipo de buffer:', buffer.toString('utf8').slice(0, 100));
 
       // 4) Retornar el QR generado
       return exits.success({
