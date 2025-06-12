@@ -1,3 +1,5 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\codigo varios\qrbase\pruebas2.js
+
 (async () => {
     const { QRCodeStyling } = require('@ckho/qr-code-styling/lib/qr-code-styling.common');
     const nodeCanvas = require("canvas");
@@ -6,7 +8,7 @@
     const path = require("path");
 
     // Ruta al archivo SVG
-    const logoPath = path.resolve(__dirname, "hostdime.svg");
+    const logoPath = path.resolve(__dirname, "a.svg");
 
     // Lee el archivo SVG y conviértelo a base64
     const logoBuffer = fs.readFileSync(logoPath);

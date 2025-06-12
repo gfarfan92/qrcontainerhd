@@ -20,7 +20,6 @@ module.exports.policies = {
   'session/check': true,
   'session/post-view': true,
   'token/validar': true,
-  'qr/generadorqr': true,
   
   '*': 'isLoggedIn',
 

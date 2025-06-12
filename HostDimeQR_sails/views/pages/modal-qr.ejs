@@ -1,44 +1,42 @@
 <!-- Modal para mostrar el QR generado -->
-<div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true" ref="qrModal">
+<div class="modal fade" id="qrModal" ref="qrModal">
   <div class="modal-dialog">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h5 class="modal-title" id="qrModalLabel">Tu código QR</h5>
+        <h5 class="modal-title">Tu código QR</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
 
-      <div class="modal-body text-center">
-        <img v-if="type === 'png'" :src="qrImage" alt="Código QR" class="img-fluid" />
-        <p v-if="type === 'png'">
+      <div class="modal-body text-center" ref="qrModalBody">
+        <!-- PNG -->
+        <img v-if="type === 'png'" :src="qrImage" class="img-fluid mb-2" alt="Código QR PNG" />
+
+        <!-- SVG -->
+        <img v-if="type === 'svg'" :src="blobUrl || qrImage" class="img-fluid mb-2" alt="Código QR SVG" />
+
+        <p class="mt-2">
           Short URL:
           <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
         </p>
 
-        <div v-else>
-          <!-- Para SVG mostramos el mismo <img> (es base64) y un botón para abrir en nueva pestaña -->
-          <img :src="qrImage" alt="QR SVG" class="img-fluid mb-2" hidden />
-          <p>
-            Short URL:
-            <a :href="shortUrl" target="_blank">{{ shortUrl }}</a>
-          </p>
-          <button class="btn btn-primary" @click="abrirSVGEnNuevaPestana">
-            Ver SVG en nueva pestaña
-          </button>
+        <button v-if="type === 'svg'" class="btn btn-primary mt-2" @click="abrirSVGEnNuevaPestana">
+          Ver SVG en nueva pestaña
+        </button>
 
 
-          <div class="text-center mt-3">
-            <button class="btn btn-warning" @click="descargarSVGCrudo">
-              Descargar SVG (crudo)
-            </button>
-          </div>
-
-
-        </div>
       </div>
-      <!-- Botón de descarga -->
-      <div v-if="qrImage" class="text-center mt-3">
-        <a :href="qrImage" :download="`Hay-tienes-tu-qr-HOSTDIME.${type}`" class="btn btn-info">Descargar QR</a>
+
+      <!--
+        -->
+
+
+      <div class="modal-footer">
+        <a v-if="qrImage" :href="qrImage" :download="`qr.${type}`" class="btn btn-info">
+          Descargar QR
+        </a>
       </div>
+
     </div>
   </div>
 </div>
