@@ -26,7 +26,7 @@ const app = Vue.createApp({
       utm_campaign: '',
       utm_term: '',
       utm_content: '',
-      utmUrlGenerada: '',
+      
      
 
     };

@@ -1,69 +1,32 @@
 <div class="container my-5">
   <div class="row justify-content-center">
     <div class="col-12 col-md-12 col-lg-12">
-      
+
       <label for="urlInput" class="form-label">Ingresa la URL</label>
-      <input
-        type="text"
-        id="urlInput"
-        name="url"
-        class="form-control mb-3"
-        v-model="url"
-        placeholder="https://example.com"
-        required
-      />
+      <input type="text" id="urlInput" name="url" class="form-control mb-3" v-model="url"
+        placeholder="https://example.com" required />
 
       <label for="source" class="form-label">utm_source</label>
-      <input
-        type="text"
-        id="source"
-        name="utm_source"
-        v-model="utm_source"
-        class="form-control mb-3"
-      />
+      <input type="text" id="source" name="utm_source" v-model="utm_source" class="form-control mb-3" />
 
       <label for="medium" class="form-label">utm_medium</label>
-      <input
-        type="text"
-        id="medium"
-        name="utm_medium"
-        v-model="utm_medium"
-        class="form-control mb-3"
-      />
+      <input type="text" id="medium" name="utm_medium" v-model="utm_medium" class="form-control mb-3" />
 
       <label for="campaign" class="form-label">utm_campaign</label>
-      <input
-        type="text"
-        id="campaign"
-        name="utm_campaign"
-        v-model="utm_campaign"
-        class="form-control mb-3"
-      />
+      <input type="text" id="campaign" name="utm_campaign" v-model="utm_campaign" class="form-control mb-3" />
 
       <label for="term" class="form-label">utm_term</label>
-      <input
-        type="text"
-        id="term"
-        name="utm_term"
-        v-model="utm_term"
-        class="form-control mb-3"
-      />
+      <input type="text" id="term" name="utm_term" v-model="utm_term" class="form-control mb-3" />
 
       <label for="content" class="form-label">utm_content</label>
-      <input
-        type="text"
-        id="content"
-        name="utm_content"
-        v-model="utm_content"
-        class="form-control mb-4"
-      />
+      <input type="text" id="content" name="utm_content" v-model="utm_content" class="form-control mb-4" />
 
 
-       <button class="btn btn-primary w-100" @click="generateutm">
-        Generar URL con UTM
-      </button>
-      
-   
+      <div v-if="utmUrlGenerada" class="alert alert-secondary">
+        <strong>URL con UTM:</strong> <a :href="utmUrlGenerada" target="_blank">{{ utmUrlGenerada }}</a>
+      </div>
+
+
 
     </div>
   </div>

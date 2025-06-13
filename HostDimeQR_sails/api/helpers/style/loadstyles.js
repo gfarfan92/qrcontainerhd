@@ -22,7 +22,7 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     const RUTA_LOGO_PNG = path.join(sails.config.appPath, 'assets', 'images', 'hostdimelogo.png');
- const RUTA_LOGO_SVG = path.join(sails.config.appPath, 'assets', 'images', 'hostdime.svg');
+ const RUTA_LOGO_SVG = path.join(sails.config.appPath, 'assets', 'images', 'logo.svg');
     const RUTA_ESTILOS = path.join(sails.config.appPath, 'files', 'getSettingsQR.json');
 
 
