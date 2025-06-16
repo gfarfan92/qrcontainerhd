@@ -16,8 +16,8 @@ const app = Vue.createApp({
       styles: [],
       url: '',
       personalUrl: '',
-      selectedStyle: 0,
-      size: '300',
+      selectedStyle: 1,
+      size: '600',
       type: 'png',
       shortUrl: '',
       qrImage: '',
@@ -37,7 +37,7 @@ const app = Vue.createApp({
 
     abrirSVGEnNuevaPestana() {
       if (!this.qrImage) return alert('No hay imagen para mostrar');
-a
+
       // Restamos la parte base64, construimos un Blob y lo abrimos
       const base64Index = this.qrImage.indexOf('base64,');
       if (base64Index === -1) {
