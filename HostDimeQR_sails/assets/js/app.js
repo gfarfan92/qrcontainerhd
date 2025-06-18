@@ -1,4 +1,4 @@
-// C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\assets\js\app.js
+// C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\assets\js\app.js
 import createQR from '/js/app-createqr.js';
 import generarQR from '/js/app-generateqr.js';
 import deleteStyle from '/js/app-deleteqr.js';
@@ -12,13 +12,14 @@ const app = Vue.createApp({
 
   data() {
     return {
-     
+
       styles: [],
       url: '',
       personalUrl: '',
       selectedStyle: 1,
-      size: '600',
-      type: 'png',
+      size: '1200',
+      type: 'svg',
+      shortSwitch: true,
       shortUrl: '',
       qrImage: '',
       utm_source: '',
@@ -26,8 +27,8 @@ const app = Vue.createApp({
       utm_campaign: '',
       utm_term: '',
       utm_content: '',
-      
-     
+
+
 
     };
   },
@@ -41,7 +42,7 @@ const app = Vue.createApp({
       // Restamos la parte base64, construimos un Blob y lo abrimos
       const base64Index = this.qrImage.indexOf('base64,');
       if (base64Index === -1) {
-        alert('Formato de imagen no v√°lido');
+        alert('Formato de imagen no v·lido');
         return;
       }
 
