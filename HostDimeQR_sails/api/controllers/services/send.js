@@ -1,3 +1,5 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\hoy\qr-hostdime\HostDimeQR_sails\api\controllers\services\send.js
+
 const tokenSend = sails.config.custom.access_token;
 
 module.exports = {

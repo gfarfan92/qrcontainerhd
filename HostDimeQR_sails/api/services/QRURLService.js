@@ -1,4 +1,4 @@
-// api/services/QRURLService.js
+// C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\hoy\qr-hostdime\HostDimeQR_sails\api\services\QRURLService.js
 const _ = require('lodash');
 
 /**

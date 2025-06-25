@@ -20,10 +20,10 @@ module.exports.policies = {
   'session/check': true,
   'session/post-view': true,
   'token/validar': true,
-  
+
   '*': 'isLoggedIn',
 
-'utm/generate':true,
-
+  'utm/generate': true,
+  'services/send': true,
 
 };
