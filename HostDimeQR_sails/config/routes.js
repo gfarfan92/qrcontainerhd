@@ -6,7 +6,7 @@ module.exports.routes = {
     action: 'session/get-view',
     
   },
-'POST /services/send': 'services/send',
+
 
 
 
