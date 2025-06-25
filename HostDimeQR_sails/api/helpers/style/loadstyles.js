@@ -1,4 +1,4 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\loadstyles.js
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\hoy\qr-hostdime\HostDimeQR_sails\api\helpers\style\loadstyles.js
 
 const path = require('path');
 const fs = require('fs');
