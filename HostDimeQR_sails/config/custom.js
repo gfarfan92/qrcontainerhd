@@ -9,6 +9,9 @@
  */
 
 module.exports.custom = {
+  access_token: '123', // token para action send
+
+
 
   /***************************************************************************
   *                                                                          *
