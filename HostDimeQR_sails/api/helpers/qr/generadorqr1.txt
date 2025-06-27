@@ -1,26 +1,27 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\api\helpers\qr\generadorqr.js
+
 const { QRCodeStyling } = require('@ckho/qr-code-styling/lib/qr-code-styling.common');
-const nodeCanvas = require('canvas');
-const { JSDOM } = require('jsdom');
+const nodeCanvas = require("canvas");
+const { JSDOM } = require("jsdom");
+const fs = require("fs");
 
 module.exports = {
-  friendlyName: 'Generador QR',
-  description: 'Genera un código QR estilizado en formato PNG o SVG',
+  friendlyName: 'Crear qr',
+  description: 'Genera un código QR con estilo personalizado.',
 
   inputs: {
     shortUrl: { type: 'string', required: true },
-    style: { type: 'number', required: true },
-    size: { type: 'number', required: true },
-    type: { type: 'string', isIn: ['png', 'svg'], required: true }
+    style:    { type: 'number', required: true },
+    size:     { type: 'number', required: true },
+    type:     { type: 'string', required: true }, // png o svg
   },
 
   exits: {
-    success: { description: 'QR generado correctamente.' },
-    error: { description: 'Error al generar el QR.' }
-  },
+    success: { description: 'QR exitoso.' },
+    error:   { description: 'Ocurrió un error al crear QR.' }
+    },
 
   fn: async function ({ shortUrl, style, size, type }, exits) {
-    sails.log.info('🎨 Generando QR con estilo', style, 'y tipo', type);
-
     try {
       // 1) Obtener estilos y logos desde el helper
       const { estilos, logo } = await sails.helpers.style.loadstyles();
@@ -46,25 +47,33 @@ module.exports = {
         image: logo[type]
       };
 
-      // Crear el QR
+      // 3) Crear el QR
       const qrCode = new QRCodeStyling({
+        nodeCanvas,
         jsdom: JSDOM,
-        nodeCanvas: type === 'png' ? nodeCanvas : undefined,
-        type: type === 'svg' ? 'svg' : undefined,
         ...opcionesQR
       });
 
-      const result = await qrCode.getRawData(type);
+      const buffer = await qrCode.getRawData(type);
 
+      //PARA BORRAR
+
+       /*const filename = `qr_${Date.now()}.${type}`;
+      const outputDir = __dirname; 
+      const outputPath = path.join(outputDir, filename);
+      fs.writeFileSync(outputPath, buffer);
+      sails.log.debug(`✅ QR guardado en: ${outputPath}`);*/
+
+      // 4) Retornar el QR generado
       return exits.success({
-        contentType: type === 'svg' ? 'image/svg+xml' : 'image/png',
-        data: result,
-        format: type
+        qrImage: `data:image/${type};base64,${buffer.toString("base64")}`,
+        shortUrl: shortUrl,
+        message: 'QR generado exitosamente'
       });
 
     } catch (err) {
-      sails.log.error('⚠️ Error generando QR en helper qr/generadorqr:', err);
-      return exits.error(err);
+      sails.log.error('❌ Error en generarqrh:', err);
+      return exits.error({ error: err.message });
     }
   }
 };

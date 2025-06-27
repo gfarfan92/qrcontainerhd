@@ -1,25 +1,14 @@
-/**
- * Custom configuration
- * (sails.config.custom)
- *
- * One-off settings specific to your application.
- *
- * For more information on custom configuration, visit:
- * https://sailsjs.com/config/custom
- */
-
+// config/custom.js
 module.exports.custom = {
   access_token: '123', // token para action send
 
-
-
-  /***************************************************************************
-  *                                                                          *
-  * Any other custom config this Sails app should use during development.    *
-  *                                                                          *
-  ***************************************************************************/
-  // sendgridSecret: 'SG.fake.3e0Bn0qSQVnwb1E4qNPz9JZP5vLZYqjh7sn8S93oSHU',
-  // stripeSecret: 'sk_test_Zzd814nldl91104qor5911gjald',
-  // …
+  
+     minio: {
+      endPoint: "s3minio.hostdi.me",
+      port: 443,
+      accessKey: "ffOS8ZdIKnODzbwjxbk6",
+      secretKey: "VP10slzgW0DO9oBjy9JdeixA05iK3LzmXSJzceLI",
+      bucket: "generalspace"
+    },
 
 };
