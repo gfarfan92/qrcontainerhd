@@ -39,22 +39,24 @@ module.exports = {
    */
   shortURL: async (payload) => {
     try {
-      const { url, customSlug } = payload;
+      let { url, customSlug } = payload;
 
       // ¡CORRECCIÓN: El helper es modifySlugWithRandom!
-      const finalCustomSlug = await QRURLService._getProcessedCustomSlug(customSlug);
+
+customSlug = customSlug;
+     //customSlug = await QRURLService._getProcessedCustomSlug(customSlug);
 
       const shortUrl = await sails.helpers.url.acortador.with({
         url,
-        customSlug: finalCustomSlug || undefined,
+        customSlug
       });
 
       return {
         success: true,
         response: {
           shortUrl,
-          customSlugUsed: finalCustomSlug
-        },
+          customSlugUsed: customSlug
+        }
       };
 
     } catch (error) {
