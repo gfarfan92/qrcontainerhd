@@ -1,61 +1,27 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\qrHst\HostDimeQR_sails\assets\js\app-generateqr.js
-
 export default {
   data() {
     return {
       blobUrl: '',
-
+      errcustom: ''
     };
   },
   methods: {
- createSvgBlob(dataUrl) {
-  console.log('?? createSvgBlob recibió (50 chars):', dataUrl.slice(0, 50));
-
-  const base64Index = dataUrl.indexOf('base64,');
-  if (base64Index === -1) {
-    console.error('? Formato de imagen no válido');
-    return '';
-  }
-
-  const base64Data = dataUrl.substring(base64Index + 7);
-  const mimeMatch = dataUrl.match(/^data:(image\/svg\+xml|image\/png);base64,/);
-  const mimeType = mimeMatch ? mimeMatch[1] : 'image/svg+xml';
-
-  try {
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: mimeType });
-    const blobUrl = URL.createObjectURL(blob);
-    console.log('? createSvgBlob ?', blobUrl);
-    return blobUrl;
-  } catch (e) {
-    console.error('? Error al decodificar Base64:', e);
-    return '';
-  }
-},
-
-
-
     async generarQR() {
-      console.log("?? Iniciando proceso de generación de QR...");
+      console.log("ðŸ”„ Generando QR...");
+      this.errcustom = ''; 
 
       if (!this.url) {
-        alert('? Por favor, ingresa una URL válida.');
+        alert('â— URL requerida.');
         return;
-      };
-     
-      // Paso 2: Usar esa URL para generar el QR
+      }
+
       const payload = {
         url: this.utmUrlGenerada,
         personalUrl: this.personalUrl,
         style: this.selectedStyle,
         size: parseInt(this.size, 10),
         type: this.type,
-        short: this.shortSwitch ? 'on' : 'off',
+        short: this.shortSwitch ? "true" : "false",
         customSlug: this.personalUrl
       };
 
@@ -69,33 +35,41 @@ export default {
         const qrData = await resQR.json();
 
         if (!resQR.ok) {
-          throw new Error(qrData.error || 'Error generando el código QR');
+          this.errcustom = qrData.errcustom || 'errorDesconocido';
+          return;
         }
 
-        console.log("? QR generado con éxito:", qrData);
         this.shortUrl = qrData.shortUrl;
         this.qrImage = qrData.qrImage;
 
-        // 2) Si es SVG, crea blobUrl
         if (this.type === 'svg') {
           this.blobUrl = this.createSvgBlob(this.qrImage);
         } else {
           this.blobUrl = '';
         }
 
-        // 3) Forzar re-render y mostrar modal
         this.$nextTick(() => {
           if (!this.modalInstance) {
             this.modalInstance = new bootstrap.Modal(this.$refs.qrModal);
           }
           this.modalInstance.show();
         });
-        
 
       } catch (err) {
-        console.error("? generarQR:", err);
-        alert(err.message);
+        console.error("âŒ generarQR:", err);
+        this.errcustom = 'falloApi';
       }
+    },
+
+    createSvgBlob(dataUrl) {
+      const base64Index = dataUrl.indexOf('base64,');
+      if (base64Index === -1) return '';
+      const base64Data = dataUrl.substring(base64Index + 7);
+      const byteCharacters = atob(base64Data);
+      const byteNumbers = Array.from(byteCharacters, char => char.charCodeAt(0));
+      const byteArray = new Uint8Array(byteNumbers);
+      const mimeMatch = dataUrl.match(/^data:(image\/svg\+xml|image\/png);base64,/);
+      return URL.createObjectURL(new Blob([byteArray], { type: mimeMatch ? mimeMatch[1] : 'image/svg+xml' }));
     }
   }
 };

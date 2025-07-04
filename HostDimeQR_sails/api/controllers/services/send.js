@@ -1,6 +1,7 @@
 //C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\api\controllers\services\send.js
 
 const tokenSend = sails.config.custom.access_token;
+const QRURLService = require('../../services/qr'); 
 
 module.exports = {
   friendlyName: 'Send up to 10 QR codes via API',
