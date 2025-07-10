@@ -1,3 +1,6 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\api\controllers\qr\generadorqr.js
+
+
 module.exports = {
   friendlyName: 'Crear qr',
   description: 'Genera un código QR: acorta la URL y aplica estilo.',
@@ -21,45 +24,54 @@ module.exports = {
     const { style, size, type, url, customSlug, short } = inputs;
 
     try {
-
-       // 1. Intentar eliminar si hay customSlug
-      /* if (customSlug) {
-         try {
-           await sails.helpers.url.eliminar.with({ customSlug });
-         } catch (deleteErr) {
-           const cause = deleteErr.cause && deleteErr.cause.status;
-           if (cause === 404) {
-             sails.log.warn(`Slug "${customSlug}" no existe, se omitió la eliminación.`);s
-           } else {
-             throw deleteErr;
-           }
-         }
-       }*/
       let shortUrl = url;
 
-      if (short === true || short === 'true' || short === 'on') {
+      // Si el acortador está activado, llamamos al helper
+      if (short === 'true') {
+
+        // ESTA ES LA FORMA CORRECTA Y ROBUSTA
+        // Envolvemos la llamada que puede fallar en su propio try/catch
         try {
           shortUrl = await sails.helpers.url.acortador.with({ url, customSlug });
         } catch (err) {
-          return exits.error(err); // ← deja que pase el objeto errcustom
+          // Si el helper falla, revisamos aquí por qué
+          if (err.exit === 'slugEnUso') {
+            sails.log.warn('⚠️ Slug personalizado en uso:', customSlug);
+
+            // Devolvemos la respuesta de error al frontend y SALIMOS de la función
+            return exits.success({
+              success: false,
+              errcustom: 'slugEnUso'
+            });
+          }
+
+          // Si fue otro tipo de error, lo relanzamos para que lo capture el catch de abajo
+          throw err;
         }
       }
 
-      const response = await sails.helpers.qr.generadorqr.with({
+      // Este código SÓLO se ejecutará si el acortador tuvo éxito (o no se usó)
+      const qrResult = await sails.helpers.qr.generadorqr.with({
         shortUrl,
         style,
         size,
-        type
+        type,
       });
 
-      return exits.success(response);
+      // Enviamos la respuesta de éxito final
+      return exits.success({
+        success: true,
+        shortUrl,
+        qrImage: qrResult.qrImage
+      });
 
     } catch (error) {
-      sails.log.error("❌ Error en controlador qr/cqr:", error);
-      return exits.error({
-        message: 'Error general',
+      // Este catch general atrapa todos los demás errores inesperados
+      sails.log.error("❌ Error en controlador qr/generadorqr:", error);
+      return exits.success({
+        success: false,
         errcustom: 'errorDesconocido'
       });
     }
   }
-};
+}

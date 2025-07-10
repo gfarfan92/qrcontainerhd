@@ -1,7 +1,7 @@
 //C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\api\controllers\services\send.js
 
 const tokenSend = sails.config.custom.access_token;
-const QRURLService = require('../../services/qr'); 
+const QRURLService = require('../../services/qr');
 
 module.exports = {
   friendlyName: 'Send up to 10 QR codes via API',
@@ -32,17 +32,33 @@ module.exports = {
       return this.res.badRequest({ error: 'Se requiere un array con al menos 1 item.' });
     }
 
-    // ✅ Validar cada item
+    // ✅ Validar cada item, el primero obliga a que siempre este una url , el segundo es para hacer funcionar mi eliminarCustom
+    /* const batch = items.slice(0, 10);
+     for (const [i, item] of batch.entries()) {
+       const url = item?.payload?.url;
+       if (!url || typeof url !== 'string') {
+         return this.res.badRequest({ error: `Ítem #${i} no tiene URL válida en payload.` });
+       }
+       if (!/^https?:\/\/.+/.test(url)) {
+         return this.res.badRequest({ error: `Ítem #${i} tiene una URL inválida.` });
+       }
+     }*/
     const batch = items.slice(0, 10);
     for (const [i, item] of batch.entries()) {
-      const url = item?.payload?.url;
-      if (!url || typeof url !== 'string') {
-        return this.res.badRequest({ error: `Ítem #${i} no tiene URL válida en payload.` });
-      }
-      if (!/^https?:\/\/.+/.test(url)) {
-        return this.res.badRequest({ error: `Ítem #${i} tiene una URL inválida.` });
+      const { cmd = 'shortURL', payload } = item;
+
+      // Solo comandos que requieren URL deben validarla
+      if (['shortURL', 'generarQR'].includes(cmd)) {
+        const url = payload?.url;
+        if (!url || typeof url !== 'string') {
+          return this.res.badRequest({ error: `Ítem #${i} no tiene URL válida en payload.` });
+        }
+        if (!/^https?:\/\/.+/.test(url)) {
+          return this.res.badRequest({ error: `Ítem #${i} tiene una URL inválida.` });
+        }
       }
     }
+
 
     // ✅ Ejecutar en paralelo
     const resultados = await Promise.all(

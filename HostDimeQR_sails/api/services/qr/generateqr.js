@@ -5,7 +5,7 @@ const handleDetailedQR = require('./generarqrparts/handleDetailedQR');
 
 module.exports = async function generateQR(payload) {
   try {
-    if (payload.url && !payload.options) {
+    if (payload.url || payload.format || payload.size || payload.customSlug && !payload.options) {
       return await handleSimpleQR(payload);
     }
 

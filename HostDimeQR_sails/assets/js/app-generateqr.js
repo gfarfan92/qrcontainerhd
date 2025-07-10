@@ -8,7 +8,7 @@ export default {
   methods: {
     async generarQR() {
       console.log("🔄 Generando QR...");
-      this.errcustom = ''; 
+      this.errcustom = '';
 
       if (!this.url) {
         alert('❗ URL requerida.');
@@ -26,15 +26,17 @@ export default {
       };
 
       try {
+        console.log("prueba");
         const resQR = await fetch('/qr/generadorqr', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
+        console.log("prueba2");
 
         const qrData = await resQR.json();
 
-        if (!resQR.ok) {
+        if (!qrData.success) {
           this.errcustom = qrData.errcustom || 'errorDesconocido';
           return;
         }
@@ -56,7 +58,9 @@ export default {
         });
 
       } catch (err) {
+        console.log("prueba4");
         console.error("❌ generarQR:", err);
+
         this.errcustom = 'falloApi';
       }
     },

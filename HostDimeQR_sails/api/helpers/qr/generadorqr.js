@@ -1,4 +1,4 @@
-//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\api\helpers\qr\generadorqr.js
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\api\helpers\url\acortador.js
 
 const { QRCodeStyling } = require('@ckho/qr-code-styling/lib/qr-code-styling.common');
 const nodeCanvas = require("canvas");
@@ -68,12 +68,11 @@ module.exports = {
 
       const buffer = await qrCode.getRawData(type);
 
-      // Guardar como archivo temporal para guardar despeus en minio
+      // esto es para guardar qr en temporal
       const fileName = `qr_${Date.now()}_${Math.random().toString(36).substring(7)}.${type}`;
+      const tempFilePath = path.join(os.tmpdir(), fileName);
 
-const tempFilePath = path.join(os.tmpdir(), fileName);
-await fs.writeFile(tempFilePath, buffer);
-
+      await fs.writeFile(tempFilePath, buffer);
 
       sails.log.info(`✅ QR temporal guardado en: ${tempFilePath}`);
 
@@ -87,11 +86,11 @@ await fs.writeFile(tempFilePath, buffer);
 
       // 4) Retornar el QR generado
       return exits.success({
-  qrImage: `data:image/${type};base64,${buffer.toString("base64")}`,
-  tempFilePath: tempFilePath,
-  shortUrl: shortUrl,
-  message: 'QR generado exitosamente'
-});
+        qrImage: `data:image/${type};base64,${buffer.toString("base64")}`,
+        tempFilePath,
+        shortUrl,
+        message: 'QR generado exitosamente'
+      });
 
     } catch (err) {
       sails.log.error('❌ Error en generarqrh:', err);

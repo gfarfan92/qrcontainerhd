@@ -7,7 +7,7 @@ const slugHandler = require('./slugHandler');
 const uploadToMinio = require('./uploadToMinio');
 
 module.exports = async function handleSimpleQR(payload) {
- 
+
 
   let tempFilePath;
   let shortUrl = payload.url;
@@ -19,11 +19,14 @@ module.exports = async function handleSimpleQR(payload) {
       shortUrl = result;
     }
 
-    const qrResult =  await sails.helpers.qr.servgeneratorcustomer.with({
-    options: payload.options,
-    format: payload.format || 'svg',
-    shortUrl,
-  });
+    const qrResult = await sails.helpers.qr.servgeneratorcustomer.with({
+      options: payload.options,
+      format: payload.format || 'svg',
+      shortUrl,
+       width: payload.size,
+        height: payload.size,
+    });
+
     tempFilePath = qrResult.tempFilePath;
 
     if (!tempFilePath || typeof tempFilePath !== 'string') {

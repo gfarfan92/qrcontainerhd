@@ -1,3 +1,5 @@
+//C:\Users\GICOGERMANF\Pictures\GERMAN\funcional\HostDimeQr\QR PRUEBAS LOCAL\api\helpers\url\acortador.js
+
 module.exports = {
   friendlyName: 'acortar Url',
   description: 'Acorta Url usando Api.',
@@ -9,10 +11,17 @@ module.exports = {
 
   exits: {
     success: {
-      description: 'Estilos cargados exitosamente.'
+      description: 'URL acortada correctamente.',
+      outputType: 'string'
+    },
+    slugEnUso: {
+      description: 'El slug personalizado ya está en uso.',
+      outputType: {
+        errcustom: 'string'
+      }
     },
     error: {
-      description: 'Ocurrió un error al cargar los estilos.'
+      description: 'Error general al acortar URL.'
     }
   },
 
@@ -36,10 +45,8 @@ module.exports = {
       if (!response.ok) {
         const errorData = await response.json();
         sails.log.error('❌ Error de Shlink:', errorData);
-        return exits.error({
-          message: 'Alias personalizado ya existe',
-          errcustom: 'slugEnUso'
-        });
+        return exits.slugEnUso({ errcustom: 'slugEnUso' });
+
       }
 
       const data = await response.json();
@@ -47,7 +54,6 @@ module.exports = {
     } catch (error) {
       sails.log.error('❌ Error en fetch Shlink:', error.message);
       return exits.error({
-        message: 'No se pudo conectar al acortador',
         errcustom: 'falloApi'
       });
     }
